@@ -1,0 +1,12 @@
+# Runtime data (local settings, sync state, temp downloads — never shared)
+data/
+
+# Database backups
+backups/
+
+# OS noise
+Thumbs.db
+desktop.ini
+
+# Local agent pointer (the real doc is , which is versioned)
+

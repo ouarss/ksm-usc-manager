@@ -1,0 +1,45 @@
+name: Build portable release
+
+# Builds a Windows bundle that runs without any PHP install:
+# app + official portable PHP (checksum-verified) + start.bat.
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  portable:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download portable PHP (latest 8.4 NTS x64, checksum-verified)
+        run: |
+          curl -sL -o releases.json https://downloads.php.net/~windows/releases/releases.json
+          PHP_ZIP=$(python3 -c "import json; print(json.load(open('releases.json'))['8.4']['nts-vs17-x64']['zip']['path'])")
+          PHP_SHA=$(python3 -c "import json; print(json.load(open('releases.json'))['8.4']['nts-vs17-x64']['zip']['sha256'])")
+          curl -sL -o php.zip "https://downloads.php.net/~windows/releases/$PHP_ZIP"
+          echo "$PHP_SHA  php.zip" | sha256sum -c -
+          echo "PHP_ZIP_NAME=$PHP_ZIP" >> "$GITHUB_ENV"
+
+      - name: Assemble bundle
+        run: |
+          mkdir -p bundle/ksm-usc-manager/php
+          cp -r public src start.bat README.md LICENSE bundle/ksm-usc-manager/
+          unzip -q php.zip -d bundle/ksm-usc-manager/php
+          cp .github/portable/php.ini bundle/ksm-usc-manager/php/
+          cd bundle && zip -qr ../ksm-usc-manager-portable-win64.zip ksm-usc-manager
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="$GITHUB_REF_NAME"
+          if [ "$GITHUB_REF_TYPE" != "tag" ]; then TAG="portable-$(date -u +%Y%m%d-%H%M)"; fi
+          gh release create "$TAG" ksm-usc-manager-portable-win64.zip \
+            --title "KSM/USC Manager portable ($TAG)" \
+            --notes "Windows portable bundle: unzip anywhere, double-click start.bat — nothing to install (PHP included: $PHP_ZIP_NAME)." \
+            --latest
