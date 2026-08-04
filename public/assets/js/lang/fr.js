@@ -137,7 +137,10 @@ window.USC_I18N.fr = {
     'Filter by level': 'Filtrer par niveau',
     'Bars': 'Barres',
     'Lines': 'Courbe',
-    'Scroll to zoom, drag to pan': 'Molette pour zoomer, glisser pour déplacer',
+    'Hover to read, scroll to zoom, drag to pan':
+        'Survole pour lire, molette pour zoomer, glisser pour déplacer',
+    'Week of {d}': 'Semaine du {d}',
+    '{n} play{s}': '{n} partie{s}',
     'Not enough history for a timeline yet.': 'Pas encore assez d\'historique pour une frise.',
     'Top scores': 'Meilleurs scores',
     'Recent plays': 'Parties récentes',

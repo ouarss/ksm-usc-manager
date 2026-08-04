@@ -1871,11 +1871,14 @@ function statCard(value, label, onClick = null) {
 // pairs: [label, value, tooltip?][] — pure CSS bars, no library
 function barChart(pairs, onClick = null) {
     const max = Math.max(1, ...pairs.map((p) => p[1]));
+    // Past ~two dozen bars the columns are narrower than their own numbers and
+    // the values run into each other: the hover title carries them instead
+    const showValues = pairs.length <= 24;
     const chart = el('div', 'bar-chart');
     for (const [label, value, tooltip] of pairs) {
         const col = el('div', 'bar-col' + (onClick ? ' clickable' : ''));
         col.title = `${tooltip || label}: ${formatInt(value)}`;
-        col.append(el('span', 'bar-value', value ? formatInt(value) : ''));
+        col.append(el('span', 'bar-value', showValues && value ? formatInt(value) : ''));
         const bar = el('div', 'bar');
         bar.style.height = `${Math.round((value / max) * 72) + (value ? 2 : 0)}px`;
         col.append(bar, el('span', 'bar-label', label));
@@ -1907,7 +1910,7 @@ async function openScoresPage() {
         node.appendChild(page);
 
         // Client-side filters (instant). Levels multi-select: none = all levels.
-        const ui = { levels: new Set(), result: 'all', text: '', timeMode: 'bars' };
+        const ui = { levels: new Set(), result: 'all', text: '', timeMode: 'lines' };
 
         // Sections, in order: cards, level chart, time chart, level filter,
         // text filter, then the results table (with its own toolbar).
@@ -2055,10 +2058,32 @@ function scoreDailyPoints(rows) {
     return [...byDay.entries()].sort((a, b) => a[0] - b[0]);
 }
 
-// Zoomable (wheel) / pannable (drag) line chart of daily play counts. Only the
-// visible X window [x0, x1] changes; the SVG line stays crisp via
-// non-scaling-stroke, and axis labels are an HTML overlay (SVG text would be
-// stretched by preserveAspectRatio="none").
+// Daily counts comb into noise as soon as the window spans more than a few
+// months, so the bucket widens with the visible span. Weeks start on Monday
+// (UTC, like the daily points); months follow the local calendar.
+const weekStart = (ts) => Math.floor((ts + 259200) / 604800) * 604800 - 259200;
+
+function monthStart(ts) {
+    const date = new Date(ts * 1000);
+
+    return new Date(date.getFullYear(), date.getMonth(), 1).getTime() / 1000;
+}
+
+function groupPoints(points, keyOf) {
+    const grouped = new Map();
+    for (const [ts, value] of points) {
+        const key = keyOf(ts);
+        grouped.set(key, (grouped.get(key) || 0) + value);
+    }
+
+    return [...grouped.entries()].sort((a, b) => a[0] - b[0]);
+}
+
+// Zoomable (wheel) / pannable (drag) line chart of play counts over time, with
+// a crosshair reading out the hovered period and its count. Only the visible X
+// window [x0, x1] changes; the SVG line stays crisp via non-scaling-stroke, and
+// every label is an HTML overlay (SVG text would be stretched by
+// preserveAspectRatio="none").
 function scoresLineChart(points) {
     const wrap = el('div', 'linechart-wrap');
     if (points.length < 2) {
@@ -2067,57 +2092,172 @@ function scoresLineChart(points) {
         return wrap;
     }
 
-    const W = 1000, H = 150, padT = 10, padB = 8;
-    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, class: 'linechart', preserveAspectRatio: 'none' });
+    const W = 1000, H = 150, padT = 14, padB = 8;
+    const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, class: 'linechart', preserveAspectRatio: 'none', tabindex: '0' });
+    const defs = svgEl('defs', {});
+    const fade = svgEl('linearGradient', { id: 'linechart-fade', x1: '0', y1: '0', x2: '0', y2: '1' });
+    fade.append(svgEl('stop', { offset: '0%', class: 'fade-top' }), svgEl('stop', { offset: '100%', class: 'fade-bottom' }));
+    defs.appendChild(fade);
     const grids = svgEl('g', {});
+    const area = svgEl('polygon', { class: 'linechart-area' });
     const line = svgEl('polyline', { class: 'linechart-line' });
-    svg.append(grids, line);
+    const cursor = svgEl('line', { class: 'linechart-cursor hidden', y1: '0', y2: String(H) });
+    svg.append(defs, grids, area, line, cursor);
+
     const labels = el('div', 'linechart-labels');
+    const ylabels = el('div', 'linechart-ylabels');
+    const dot = el('span', 'linechart-dot hidden');
+    const tip = el('div', 'linechart-tip hidden');
     const plot = el('div', 'linechart-plot');
-    plot.append(svg, labels);
-    wrap.append(plot, el('p', 'linechart-hint', t('Scroll to zoom, drag to pan')));
+    plot.append(svg, labels, ylabels, dot, tip);
+    wrap.append(plot, el('p', 'linechart-hint', t('Hover to read, scroll to zoom, drag to pan')));
 
+    // The three zoom levels, bucketed once: switching is then a lookup
+    const levels = {
+        day: points,
+        week: groupPoints(points, weekStart),
+        month: groupPoints(points, monthStart),
+    };
     const tMin = points[0][0], tMax = points[points.length - 1][0];
-    const vMax = Math.max(1, ...points.map((p) => p[1]));
     let x0 = tMin, x1 = tMax;
-    const fmt = (ts) => new Date(ts * 1000).toLocaleDateString(DATE_LOCALE, { day: '2-digit', month: 'short', year: 'numeric' });
+    let shown = points;          // buckets of the current level
+    let px = () => 0, py = () => 0;
 
+    const fmtDay = (ts) => new Date(ts * 1000).toLocaleDateString(DATE_LOCALE, { day: '2-digit', month: 'short', year: 'numeric' });
+    const levelFor = (span) => (span > 800 * 86400 ? 'month' : span > 120 * 86400 ? 'week' : 'day');
+    const periodLabel = (level, ts) => {
+        if (level === 'month') return new Date(ts * 1000).toLocaleDateString(DATE_LOCALE, { month: 'long', year: 'numeric' });
+
+        return level === 'week' ? t('Week of {d}', { d: fmtDay(ts) }) : fmtDay(ts);
+    };
+
+    let level = 'day';
     const draw = () => {
         const span = Math.max(1, x1 - x0);
-        const px = (ts) => ((ts - x0) / span) * W;
-        const py = (v) => padT + (1 - v / vMax) * (H - padT - padB);
-        line.setAttribute('points', points.map((p) => `${px(p[0]).toFixed(1)},${py(p[1]).toFixed(1)}`).join(' '));
+        level = levelFor(span);
+        shown = levels[level];
+        px = (ts) => ((ts - x0) / span) * W;
+
+        // Scale to what is on screen: zooming in on a quiet stretch should
+        // show its shape, not a flat line under a far-away all-time peak
+        const visible = shown.filter((p) => p[0] >= x0 && p[0] <= x1);
+        const vMax = Math.max(1, ...visible.map((p) => p[1]));
+        py = (v) => padT + (1 - v / vMax) * (H - padT - padB);
+
+        const coords = shown.map((p) => `${px(p[0]).toFixed(1)},${py(p[1]).toFixed(1)}`);
+        line.setAttribute('points', coords.join(' '));
+        area.setAttribute('points', `${px(shown[0][0]).toFixed(1)},${H} ${coords.join(' ')} ${px(shown[shown.length - 1][0]).toFixed(1)},${H}`);
 
         grids.replaceChildren();
         labels.replaceChildren();
-        for (let y = new Date(x0 * 1000).getFullYear(); y <= new Date(x1 * 1000).getFullYear(); y++) {
-            const ts = new Date(y, 0, 1).getTime() / 1000;
+        ylabels.replaceChildren();
+
+        // Y guides: the peak and its half, enough to read a height without
+        // turning the plot into graph paper
+        for (const value of [vMax, vMax / 2]) {
+            const y = py(value);
+            grids.appendChild(svgEl('line', { x1: '0', y1: y, x2: String(W), y2: y, class: 'linechart-grid linechart-grid-y' }));
+            const label = el('span', 'linechart-label linechart-ylabel', formatInt(Math.round(value)));
+            label.style.top = `${(y / H) * 100}%`;
+            ylabels.appendChild(label);
+        }
+
+        for (let year = new Date(x0 * 1000).getFullYear(); year <= new Date(x1 * 1000).getFullYear(); year++) {
+            const ts = new Date(year, 0, 1).getTime() / 1000;
             if (ts < x0 || ts > x1) continue;
-            grids.appendChild(svgEl('line', { x1: px(ts), y1: 0, x2: px(ts), y2: H, class: 'linechart-grid' }));
-            const label = el('span', 'linechart-label', String(y));
-            label.style.left = `${(px(ts) / W) * 100}%`;
+            const x = px(ts);
+            grids.appendChild(svgEl('line', { x1: x, y1: '0', x2: x, y2: String(H), class: 'linechart-grid' }));
+            // Near an edge the grid line still marks the year, but its label
+            // would sit on top of the window's start/end date
+            if (x < 80 || x > W - 80) continue;
+            const label = el('span', 'linechart-label', String(year));
+            label.style.left = `${(x / W) * 100}%`;
             labels.appendChild(label);
         }
         labels.append(
-            el('span', 'linechart-label edge', fmt(x0)),
-            el('span', 'linechart-label edge edge-right', fmt(x1)),
+            el('span', 'linechart-label edge', fmtDay(x0)),
+            el('span', 'linechart-label edge edge-right', fmtDay(x1)),
         );
+    };
+
+    /* ----- Crosshair: snaps to the nearest bucket, reads out X and Y ----- */
+
+    let readIndex = null;
+
+    const hideRead = () => {
+        readIndex = null;
+        cursor.classList.add('hidden');
+        dot.classList.add('hidden');
+        tip.classList.add('hidden');
+    };
+
+    const showRead = (index) => {
+        const point = shown[index];
+        if (!point) return hideRead();
+        readIndex = index;
+        const x = px(point[0]), y = py(point[1]);
+        cursor.setAttribute('x1', x);
+        cursor.setAttribute('x2', x);
+        cursor.classList.remove('hidden');
+        dot.style.left = `${(x / W) * 100}%`;
+        dot.style.top = `${(y / H) * 100}%`;
+        dot.classList.remove('hidden');
+
+        tip.replaceChildren(
+            el('strong', '', t('{n} play{s}', { n: formatInt(point[1]), s: plural(point[1]) })),
+            el('span', '', periodLabel(level, point[0])),
+        );
+        // Clamped so the readout never leaves the plot on the first/last
+        // bucket, and flipped below the point when the peak touches the top
+        tip.style.left = `${Math.min(88, Math.max(12, (x / W) * 100))}%`;
+        tip.style.top = `${(y / H) * 100}%`;
+        tip.classList.toggle('below', y < H * 0.32);
+        tip.classList.remove('hidden');
+    };
+
+    // Nearest visible bucket to a viewBox x — the reader aims at a date, not
+    // at a 2px line
+    const readAt = (viewX) => {
+        let best = null, bestDist = Infinity;
+        shown.forEach((point, index) => {
+            const dist = Math.abs(px(point[0]) - viewX);
+            if (dist < bestDist) { bestDist = dist; best = index; }
+        });
+        if (best !== null) showRead(best);
+    };
+
+    const viewXof = (clientX) => {
+        const rect = svg.getBoundingClientRect();
+
+        return ((clientX - rect.left) / rect.width) * W;
     };
 
     svg.addEventListener('wheel', (event) => {
         event.preventDefault();
-        const rect = svg.getBoundingClientRect();
-        const at = x0 + ((event.clientX - rect.left) / rect.width) * (x1 - x0);
+        const at = x0 + (viewXof(event.clientX) / W) * (x1 - x0);
         const factor = event.deltaY < 0 ? 0.8 : 1.25;
         const nx0 = Math.max(tMin, at - (at - x0) * factor);
         const nx1 = Math.min(tMax, at + (x1 - at) * factor);
-        if (nx1 - nx0 >= 86400) { x0 = nx0; x1 = nx1; draw(); }
+        if (nx1 - nx0 >= 86400) {
+            x0 = nx0; x1 = nx1;
+            draw();
+            readAt(viewXof(event.clientX));
+        }
     }, { passive: false });
 
     let dragX = null;
-    svg.addEventListener('pointerdown', (event) => { dragX = event.clientX; svg.setPointerCapture(event.pointerId); svg.classList.add('dragging'); });
+    svg.addEventListener('pointerdown', (event) => {
+        dragX = event.clientX;
+        svg.setPointerCapture(event.pointerId);
+        svg.classList.add('dragging');
+        hideRead();
+    });
     svg.addEventListener('pointermove', (event) => {
-        if (dragX === null) return;
+        if (dragX === null) {
+            readAt(viewXof(event.clientX));
+
+            return;
+        }
         const rect = svg.getBoundingClientRect();
         const dt = ((event.clientX - dragX) / rect.width) * (x1 - x0);
         dragX = event.clientX;
@@ -2130,6 +2270,20 @@ function scoresLineChart(points) {
     const endDrag = () => { dragX = null; svg.classList.remove('dragging'); };
     svg.addEventListener('pointerup', endDrag);
     svg.addEventListener('pointercancel', endDrag);
+    svg.addEventListener('pointerleave', () => { endDrag(); hideRead(); });
+
+    // Keyboard reaches the same readout: the crosshair walks bucket by bucket
+    svg.addEventListener('keydown', (event) => {
+        const step = { ArrowLeft: -1, ArrowRight: 1 }[event.key];
+        if (step) {
+            event.preventDefault();
+            const from = readIndex === null ? shown.findIndex((p) => p[0] >= x0) : readIndex + step;
+            showRead(Math.min(shown.length - 1, Math.max(0, from)));
+        } else if (event.key === 'Escape') {
+            hideRead();
+        }
+    });
+    svg.addEventListener('blur', hideRead);
 
     draw();
 

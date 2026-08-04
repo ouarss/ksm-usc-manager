@@ -322,11 +322,15 @@ body {
 
 /* ---------- Main / context bar ---------- */
 
+/* min-width: 0 — without it a grid item never shrinks below its content, so a
+   wide child (a bar chart with years of months, a long table) pushes the whole
+   layout past the viewport instead of scrolling inside its own box */
 .main {
     grid-area: main;
     display: flex;
     flex-direction: column;
     min-height: 0;
+    min-width: 0;
 }
 
 .paths-alert {
@@ -551,21 +555,73 @@ button.stat-card.clickable:hover { border-color: var(--laser-l); }
 }
 .linechart.dragging { cursor: grabbing; }
 
+.linechart:focus-visible { outline: 1px solid var(--laser-l); outline-offset: 2px; }
+
 .linechart-line {
     fill: none;
     stroke: var(--laser-l);
-    stroke-width: 1.5;
+    stroke-width: 2;
     vector-effect: non-scaling-stroke;
     stroke-linejoin: round;
+    stroke-linecap: round;
 }
-.linechart-grid { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
 
-.linechart-labels { position: absolute; left: 0; right: 0; bottom: 4px; height: 0; pointer-events: none; }
+/* The fill under the line does the reading work at low zoom, where the daily
+   spikes would otherwise stack into a wall of strokes */
+.linechart-area { stroke: none; fill: url(#linechart-fade); }
+.linechart .fade-top { stop-color: var(--laser-l); stop-opacity: 0.26; }
+.linechart .fade-bottom { stop-color: var(--laser-l); stop-opacity: 0; }
+
+.linechart-grid { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.linechart-grid-y { stroke-dasharray: 2 4; opacity: 0.75; }
+
+.linechart-cursor {
+    stroke: var(--laser-l);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    opacity: 0.55;
+    vector-effect: non-scaling-stroke;
+}
+
+/* Dates sit below the plot, clear of the curve */
+.linechart-labels { position: absolute; left: 0; right: 0; top: calc(100% + 7px); height: 0; pointer-events: none; }
 .linechart-label { position: absolute; font: 9.5px var(--font-data); color: var(--muted); white-space: nowrap; padding-left: 3px; }
 .linechart-label.edge { left: 0; color: var(--text); }
 .linechart-label.edge-right { left: auto; right: 0; padding-left: 0; padding-right: 3px; }
 
-.linechart-hint { color: var(--muted); font-size: 11px; margin-top: 5px; text-align: center; }
+/* Y guides span the whole plot, unlike the date labels pinned to its baseline */
+.linechart-ylabels { position: absolute; inset: 0; pointer-events: none; }
+.linechart-ylabel { left: 0; transform: translateY(-100%); padding-left: 4px; }
+
+.linechart-dot {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    margin: -4.5px 0 0 -4.5px;
+    border-radius: 50%;
+    background: var(--laser-l);
+    box-shadow: 0 0 0 2px var(--panel);
+    pointer-events: none;
+}
+
+.linechart-tip {
+    position: absolute;
+    transform: translate(-50%, calc(-100% - 12px));
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 9px;
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 2;
+}
+.linechart-tip.below { transform: translate(-50%, 12px); }
+.linechart-tip strong { display: block; font: 13px var(--font-data); color: var(--text); }
+.linechart-tip span { font: 10.5px var(--font-data); color: var(--muted); }
+
+/* Leaves room for the date row now overlaid under the plot */
+.linechart-hint { color: var(--muted); font-size: 11px; margin-top: 24px; text-align: center; }
 
 /* Centered like the Explorer's filter bar, for a unified look across views */
 .scores-filters { margin-top: 20px; text-align: center; }

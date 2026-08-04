@@ -135,7 +135,10 @@ window.USC_I18N.ja = {
     'Filter by level': 'レベルでフィルター',
     'Bars': '棒グラフ',
     'Lines': '折れ線',
-    'Scroll to zoom, drag to pan': 'スクロールでズーム、ドラッグで移動',
+    'Hover to read, scroll to zoom, drag to pan':
+        'カーソルで数値表示、スクロールでズーム、ドラッグで移動',
+    'Week of {d}': '{d} の週',
+    '{n} play{s}': '{n} プレイ',
     'Not enough history for a timeline yet.': 'タイムラインを表示するには履歴が足りません。',
     'Top scores': 'トップスコア',
     'Recent plays': '最近のプレイ',
