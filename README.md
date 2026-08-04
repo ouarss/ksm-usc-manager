@@ -65,7 +65,13 @@ pages and add them to a collection in one go.
 
 ![Add the selection to an existing or new collection](media/filter-select-add-to-collection-2.png)
 
-## Score history
+## Scores & stats
+
+The **Scores** page reads your play history as a whole: totals and clear rate,
+plays by level (click a bar to filter), plays over time (hover to read, scroll
+to zoom, drag to pan) and the top scores table.
+
+![Scores: totals, plays by level, plays over time and top scores](media/score-stats.png)
 
 Clicking a song opens its details with the full play history per difficulty
 (score, gauge, crit/near/miss, combo) and a link to its folder.
@@ -83,6 +89,10 @@ Clicking a song opens its details with the full play history per difficulty
 
 ![Import preview: matched songs and missing charts](media/import-missing.png)
 
+- Nobody to trade with yet? [`media/topofzeworld.json`](media/topofzeworld.json)
+  is a real export (121 songs) — download it and drop it on **Import
+  Collection**: the preview shows which of its charts your library already has,
+  and lists the rest.
 - Legacy KShootMania `.fav` files can be imported too.
 
 ![Import Collection: drop a .json or legacy .fav](media/import-collection-as-json.png)

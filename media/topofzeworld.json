@@ -1,0 +1,1646 @@
+{
+    "format": "usc-collection",
+    "version": 1,
+    "name": "topofzeworld",
+    "exported_at": "2026-08-04T12:18:09+00:00",
+    "song_count": 121,
+    "songs": [
+        {
+            "title": "GuNGNiR",
+            "artist": "gram",
+            "effector": "",
+            "charts": [
+                {
+                    "hash": "b763a64f62238642406d06c7d8f08145cdf6bd7e",
+                    "diff": "EXH",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "neu",
+            "artist": "少年ラジオ",
+            "effector": "Leo",
+            "charts": [
+                {
+                    "hash": "7d03ef93ff98a612bcae48081570277836c6182f",
+                    "diff": "INF",
+                    "level": 17
+                }
+            ]
+        },
+        {
+            "title": "Contrapasso -paradiso-",
+            "artist": "t+pazolite",
+            "effector": "",
+            "charts": [
+                {
+                    "hash": "e7ab35e07a6dad3820df1b4cdafe1e4d37c3e8c4",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "BroGamer (tpz Overheat Remix)",
+            "artist": "USAO",
+            "effector": "YUURI",
+            "charts": [
+                {
+                    "hash": "179c99beb6177fa794109aef636205d677cf670a",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Storm Buster",
+            "artist": "P*Light",
+            "effector": "Fresh Chicken",
+            "charts": [
+                {
+                    "hash": "e871c399e4c7ca1cd2db7971577e7b1f9cbcfea4",
+                    "diff": "EXH",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "冬に桜が咲くようなキセキ。",
+            "artist": "Music by nmk/佐原誠&kei_iwata, Vocal by SOPHY",
+            "effector": "PHQUASE",
+            "charts": [
+                {
+                    "hash": "97a5387cfbe5ba7e64d9b4bd14474411739ce051",
+                    "diff": "EXH",
+                    "level": 14
+                }
+            ]
+        },
+        {
+            "title": "Pumpin' Junkies (Kobaryo's FTN-Remix)",
+            "artist": "Kobaryo",
+            "effector": "子猫",
+            "charts": [
+                {
+                    "hash": "627af96f98bc50ccde0af52ef8d9ed0ebd9befd6",
+                    "diff": "EXH",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Viyella's Tears",
+            "artist": "Laur",
+            "effector": "Arpple",
+            "charts": [
+                {
+                    "hash": "105eb740f67e671afc40013704f001ab04a56579",
+                    "diff": "EXH",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Ragnarok",
+            "artist": "Gram VS かめりあ",
+            "effector": "TAYEUS īnfernō vs. 地獄王「テーウス」",
+            "charts": [
+                {
+                    "hash": "cde5497a8d3e9faa6c267e35c6018288d61277e0",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "エンドマークに希望と涙を添えて",
+            "artist": "cosMo＠暴走P",
+            "effector": "Arkhalis",
+            "charts": [
+                {
+                    "hash": "77ae61d88b2f65e541e1768a1d1dfada627f373b",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Giselle",
+            "artist": "Widowmaker",
+            "effector": "YunWoo",
+            "charts": [
+                {
+                    "hash": "7fe018af5560b37f2e65c4644252e096a18476c6",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Climax",
+            "artist": "USAO",
+            "effector": "NEO.ZR -FINAL ROUND-",
+            "charts": [
+                {
+                    "hash": "6b6b73635f2b3561c9d0b8c74f4935ea56e39252",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "ENDYMION",
+            "artist": "fallen shepherd ft. RabbiTon Strings",
+            "effector": "NEO.ZR -永遠の眠り-",
+            "charts": [
+                {
+                    "hash": "537bc6c39ac2335b13fd484adbf8b3e23968b5d0",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "1xMISS",
+            "artist": "BilliumMoto",
+            "effector": "Sinmin",
+            "charts": [
+                {
+                    "hash": "5b9d8781fdf903e48a8ef5997a2116294285616c",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": " Einherjar Joker",
+            "artist": "DJ Genki vs Gram\t",
+            "effector": "オルトリンデAlter‧Requiem",
+            "charts": [
+                {
+                    "hash": "8fa30c72411f66a2a7d1cabfd818fe4da536f18d",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Big Daddy",
+            "artist": "USAO",
+            "effector": "GanDhee",
+            "charts": [
+                {
+                    "hash": "26c124d5e7a65884a89c5d8e2135f1477b3fde1d",
+                    "diff": "EXH",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Milky Factory",
+            "artist": "kobaryo",
+            "effector": "TRiPPING CONTACT",
+            "charts": [
+                {
+                    "hash": "f26e79f63b4b23d9245a23270d7a20b2ef12dd1e",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Sigmund",
+            "artist": "Gram",
+            "effector": "RegeN†DARIA",
+            "charts": [
+                {
+                    "hash": "5b983ea2491d3587043450f03eb12edc705d5dd1",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Widow's kiss",
+            "artist": "Widowmaker",
+            "effector": "Penser à la tristesse",
+            "charts": [
+                {
+                    "hash": "c82d667b1c672ad6af3294e10d2009e5dae869cc",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "きらきらタイム☆",
+            "artist": "さわわ",
+            "effector": "Melona",
+            "charts": [
+                {
+                    "hash": "810125bb1dfa64e20d4a886a9b65c9bc8fa16fba",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Calamity Fortune",
+            "artist": "LeaF",
+            "effector": "paranormal",
+            "charts": [
+                {
+                    "hash": "bafd3b48804a1ec3e295fec3645394eb691a2a70",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "向日葵サンセット",
+            "artist": "ARM·まろん(IOSYS)×ランコ·パプリカ(豚乙女)",
+            "effector": "YunWoo",
+            "charts": [
+                {
+                    "hash": "9741054cba55c9f6b2b3705061a699999289b115",
+                    "diff": "INF",
+                    "level": 17
+                }
+            ]
+        },
+        {
+            "title": "蠅の王",
+            "artist": "あさき",
+            "effector": "テーウス",
+            "charts": [
+                {
+                    "hash": "fbab8d428dbd648cf1928690a67300c7ed96e991",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Malicious Mischance",
+            "artist": "s-don",
+            "effector": "Guilty",
+            "charts": [
+                {
+                    "hash": "a99007d41cff03cfc9eeaa3323e573e6cb0e855e",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "CENSORED!! (Short ver.)",
+            "artist": "t+pazolite",
+            "effector": "Effected by ██████",
+            "charts": [
+                {
+                    "hash": "2ff97ae497edc05f79b03ae9263194bad6b8d700",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Koko Soko (AKIBA KOUBOU Eurobeat Remix)",
+            "artist": "Smile.dk",
+            "effector": "Sp33dRave",
+            "charts": [
+                {
+                    "hash": "bab7f040a169c642d938ba331a1470fe914159b0",
+                    "diff": "EXH",
+                    "level": 17
+                }
+            ]
+        },
+        {
+            "title": "NXPCTD",
+            "artist": "Crazy Astronaut",
+            "effector": "TAYEUS beyonder",
+            "charts": [
+                {
+                    "hash": "decaad5445dfc1877e7fc423676124d942d6c86f",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "HAPPY☆LUCKY☆YEAPPY",
+            "artist": "DJ ミラクル☆ストーン",
+            "effector": "TAYEUS",
+            "charts": [
+                {
+                    "hash": "90ff963d2c5eac4272918f3e2edbe3968113da49",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "ゼロから始めるブレインパワー",
+            "artist": "二年生チーム",
+            "effector": "Luasterism*Yuzu",
+            "charts": [
+                {
+                    "hash": "fc1670736a745c7214a28d358cf9ebd37f6b03f3",
+                    "diff": "INF",
+                    "level": 17
+                }
+            ]
+        },
+        {
+            "title": "Lone Digger",
+            "artist": "Caravan Palace",
+            "effector": "Xanthor",
+            "charts": [
+                {
+                    "hash": "a0a1c455f8594b8d153a97d6b9b2efa7960080a9",
+                    "diff": "NOV",
+                    "level": 6
+                },
+                {
+                    "hash": "f1c7369331adea324bf423159fd55a5ee4b16732",
+                    "diff": "ADV",
+                    "level": 13
+                },
+                {
+                    "hash": "4a5950087f1db89a8aa6cc00a361896e1be9c84d",
+                    "diff": "EXH",
+                    "level": 15
+                },
+                {
+                    "hash": "0ab90b29c10bd21648528f7d625832130d123334",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "タンポポ",
+            "artist": "豚乙女",
+            "effector": "marthes. × ÉD1R",
+            "charts": [
+                {
+                    "hash": "e9601d921de8aa02c0248884ac3c6c1fb3d66eab",
+                    "diff": "INF",
+                    "level": 17
+                }
+            ]
+        },
+        {
+            "title": "THE CANNONBALLER(FULLSIZE MIX)",
+            "artist": "L.E.D. feat. YURiCa 花たん",
+            "effector": "SPDRAV vs TAYEUS",
+            "charts": [
+                {
+                    "hash": "618b1d711d7315759a8bbc597cb5d89a0edebf24",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "FAKE STYLE II †",
+            "artist": "FAKE TYPE.",
+            "effector": "TAYEUS",
+            "charts": [
+                {
+                    "hash": "7748932909834fe50a62eebd16fa7ef9a340eebe",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "IndiHome Paket Streamix(Lax1u57remix)",
+            "artist": "Indonesia Magic Telecom",
+            "effector": "Kartografer pusaran 茶MK",
+            "charts": [
+                {
+                    "hash": "2cdff06ee0e1e1c5e9f5494cd7cb84eebf1d3971",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "777",
+            "artist": "RoughSketch",
+            "effector": "Xanthor",
+            "charts": [
+                {
+                    "hash": "d95c17d8755c96406141ede4a2adfc600605f997",
+                    "diff": "NOV",
+                    "level": 9
+                },
+                {
+                    "hash": "5253b18065bc36452fbad9f1dea4753f246ed79c",
+                    "diff": "ADV",
+                    "level": 15
+                },
+                {
+                    "hash": "7481fda5bc1980e0c7c935c76c06ede21ee6984f",
+                    "diff": "EXH",
+                    "level": 18
+                },
+                {
+                    "hash": "717c554755eff99f6fcfc25e0939769c0b81473a",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Vafþrúðnir",
+            "artist": "Team Grimoire",
+            "effector": "GroTeXque",
+            "charts": [
+                {
+                    "hash": "04b20be4a38b8ff08f590834d195f9d9c63e6b7e",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Grievous Lady -nothing is but what is not-",
+            "artist": "Team Grimoire vs Laur",
+            "effector": "Guilty -everything but you-",
+            "charts": [
+                {
+                    "hash": "c39a5a5e4795bc8554775a983dce1ffd8d52caf1",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Viyella's Scream",
+            "artist": "Laur",
+            "effector": "‡:innocenT:‡",
+            "charts": [
+                {
+                    "hash": "4f600f80e6d3bb3ca9bdbf9679bb42728624e534",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Animosity",
+            "artist": "Laur",
+            "effector": "Xanthor",
+            "charts": [
+                {
+                    "hash": "8ba893919f9b01046b2b38bd7a861ed3c2c8bb58",
+                    "diff": "NOV",
+                    "level": 8
+                },
+                {
+                    "hash": "3c12d0ef171cc13ad444ea511698ef7605b91836",
+                    "diff": "ADV",
+                    "level": 14
+                },
+                {
+                    "hash": "418783cf5008d0c8684250e38aa325bc16ade359",
+                    "diff": "EXH",
+                    "level": 17
+                },
+                {
+                    "hash": "cfa2729d5c9f61531f7f2179d15191e768c7053a",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "SUPER REACTOR X [feat. HiTNEX-X]",
+            "artist": "Kobaryo",
+            "effector": "ÉD1R",
+            "charts": [
+                {
+                    "hash": "ba4047f007d3038ad17dc1dda1231395a5032a5c",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "勘冴えて悔しいわ[55,699,395]",
+            "artist": "ずっと真夜中でいいのに。",
+            "effector": "ZAO@ずとまよ100万おめでとう",
+            "charts": [
+                {
+                    "hash": "de769ac8c32a820f7871bd743be0fbde55509cc0",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Far Away Light",
+            "artist": "technoplanet feat. はるの&黒沢ダイスケ",
+            "effector": "RIN-K",
+            "charts": [
+                {
+                    "hash": "2899e8a732f4ef93063910b1711937c0f0c772e6",
+                    "diff": "EXH",
+                    "level": 17
+                },
+                {
+                    "hash": "4802c7c20dd7e8fb75b3c104ceb8943efe230f23",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "VIOLENCE IN THE HOSPITAL",
+            "artist": "RoughSketch",
+            "effector": "Étude Des Illusions Réalistes",
+            "charts": [
+                {
+                    "hash": "2a4ebcf73d4e354f7ed9523a66d1f395c618b873",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "eden",
+            "artist": "\"漆黒\"の堕天使《Gram》†Versus† \"聖刻\"の熾天使《Gram》",
+            "effector": "\"Darkness\" 《Guilty》 †Versus† \"Justice\" ‡:innocenT:‡",
+            "charts": [
+                {
+                    "hash": "944576fa639dd2af9e902982ee256f4d9ffcaf54",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Desecration",
+            "artist": "Laur",
+            "effector": "MasterCelebi",
+            "charts": [
+                {
+                    "hash": "02b749832ab6b1ef811ec63c811700a22d0c02ba",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Rebellion Trigger",
+            "artist": "xi",
+            "effector": "Petal The Avenger",
+            "charts": [
+                {
+                    "hash": "da0ca5a4a0dcff640d8b2de1149de2d917acfbe7",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Malicious Mischance",
+            "artist": "s-don",
+            "effector": "GanDhee",
+            "charts": [
+                {
+                    "hash": "f29224c2e3f49ef9ea00bf3f45d9b3d7b860c0c2",
+                    "diff": "EXH",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "きらきらタイム☆",
+            "artist": "さわわ",
+            "effector": "Melona",
+            "charts": [
+                {
+                    "hash": "003f884f0209a9454b6dd3ef37e107f484ef4175",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "ANU",
+            "artist": "sasakure.UK VS 穴山大輔",
+            "effector": "bunny",
+            "charts": [
+                {
+                    "hash": "8e46dc927618aa54d680133994530ef8025d3033",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "ENDYMION (long edit)",
+            "artist": "fallen shepherd ft. RabbiTon Strings",
+            "effector": "YUURI",
+            "charts": [
+                {
+                    "hash": "3951c0b5a0ee69be8bc29449d4ad71b7d455cb9f",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Longinus",
+            "artist": "xi",
+            "effector": "A Liter of SWEET SOFT ICE CREAM",
+            "charts": [
+                {
+                    "hash": "779ba83565a350a59e5fce65abb221fdcdbbc652",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "TEmPTaTiON",
+            "artist": "かねこちはる",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "138b40cff4c67e26463a99a4c52d5c99926e9ca0",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "eden",
+            "artist": "\"漆黒\"の堕天使《Gram》†Versus† \"聖刻\"の熾天使《Gram》",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "b3e1b699aa213d274b988107faf426223442ff4b",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Blows Up Everything",
+            "artist": "USAO",
+            "effector": "Fresh Chicken",
+            "charts": [
+                {
+                    "hash": "07696bd31405d75de4b9ad11f95f43614a255676",
+                    "diff": "EXH",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Touch and Go",
+            "artist": "Noah",
+            "effector": "Stonk",
+            "charts": [
+                {
+                    "hash": "9cbcd0e9765a97157eabec6b2665f6d26d20575e",
+                    "diff": "EXH",
+                    "level": 17
+                },
+                {
+                    "hash": "6e4121bbbdb517785bc00c09bd5417ca4f4d3620",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Vafþrúðnir",
+            "artist": "Team Grimoire",
+            "effector": "wly436",
+            "charts": [
+                {
+                    "hash": "734f42b5c7a65541cb541fcae9b543062ddfdde9",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Heavenly Blast",
+            "artist": "xi",
+            "effector": "↑R25↓",
+            "charts": [
+                {
+                    "hash": "40ee4bfb2314e5663bb0b0061551d278a8b754dd",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Slang",
+            "artist": "Kozo Nakamura",
+            "effector": "Rushi25",
+            "charts": [
+                {
+                    "hash": "4449072142edec34dfc6a459bc236f723a729225",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Silentphobia",
+            "artist": "t+pazolite VS 削除",
+            "effector": "MINI",
+            "charts": [
+                {
+                    "hash": "53f22717915ead2609046456bec0c90f8e0e9807",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "フィクサー",
+            "artist": "nulut",
+            "effector": "黒衣の宰相 - LPO",
+            "charts": [
+                {
+                    "hash": "c7fce9cef676b647429a34c89ae6ad23703b7691",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Krave",
+            "artist": "litmus* as Ester",
+            "effector": "elix. as Kyrie",
+            "charts": [
+                {
+                    "hash": "65e1725fd64039fad981b7509dfafe5ec1462a31",
+                    "diff": "NOV",
+                    "level": 6
+                },
+                {
+                    "hash": "ad2130ef1e7309f7721d73849eba84fabf9c7fd4",
+                    "diff": "ADV",
+                    "level": 12
+                },
+                {
+                    "hash": "d678149227a72f1dfdeba0f2af185b0210c08775",
+                    "diff": "EXH",
+                    "level": 17
+                },
+                {
+                    "hash": "5cc5339e64684619b1d81aa46b200aff4cd2d27a",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Cthugha",
+            "artist": "USAO",
+            "effector": "Speedrave vs. TearsD ft. TAYEUS",
+            "charts": [
+                {
+                    "hash": "84d9f9cf912fdfca65dd57909d62f568454f4172",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "パニックポップ☆フェスティバル!!!",
+            "artist": "DJ Genki",
+            "effector": "qop",
+            "charts": [
+                {
+                    "hash": "a8d4c7be40a284a9572c9215f49b91145bdbdd12",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "ホイホイ☆幻想ホロイズム",
+            "artist": "COOL&CREATE × 宝鐘マリン with ホロイズムファンタジー",
+            "effector": "A～PH～oy!!",
+            "charts": [
+                {
+                    "hash": "ad1ad004e5e3d15968f1f2608b952bfa9d696d15",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "烈華RESONANCE",
+            "artist": "REDALiCE vs Kobaryo",
+            "effector": "MINI",
+            "charts": [
+                {
+                    "hash": "1e46de537bd1f0f083ff5a01a2dcdbe41e4e2cfe",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "ウサテイ20XX",
+            "artist": "あまね＋ビートまりお (COOL&CREATE)",
+            "effector": "qop",
+            "charts": [
+                {
+                    "hash": "dfc77c5d0820732e47674812451cbbd148970f03",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Electric \"Sister\" Bitch",
+            "artist": "t+pazolite",
+            "effector": "TAKU",
+            "charts": [
+                {
+                    "hash": "6348bf01abdf87a8b1ef36a32093ec852f24c900",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "神っぽいな Covered by紫咲シオン",
+            "artist": "ピノキオピー",
+            "effector": "NEO.LPO [邪神]",
+            "charts": [
+                {
+                    "hash": "a53c6422594d12157c9b6061a56f44d5fc237078",
+                    "diff": "EXH",
+                    "level": 16
+                },
+                {
+                    "hash": "8dba1ebe7ee6d8700df20671f9094b2f79d457ee",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Dimension Hacker",
+            "artist": "kobaryo",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "87434d84e0a6003ea75c7797a89851769e908086",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Contrapasso -paradiso-",
+            "artist": "t+pazolite",
+            "effector": "DD",
+            "charts": [
+                {
+                    "hash": "3b918729e49c8fb5ccbbc45271e1a9f00f6d4c67",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "chakra",
+            "artist": "uma",
+            "effector": "9CB",
+            "charts": [
+                {
+                    "hash": "908e7d20c6c0eaad710b2336f284fc6a4013166c",
+                    "diff": "EXH",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "The Show's Over",
+            "artist": "！すでのな",
+            "effector": "Canonico",
+            "charts": [
+                {
+                    "hash": "97f67480a9bf59e1ab56d000be9c3f4543ce03ac",
+                    "diff": "EXH",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "DANGEROOOOUS JUNGLE",
+            "artist": "Laur",
+            "effector": "P3333P",
+            "charts": [
+                {
+                    "hash": "2e0a493388d65544524992a8bc8b3d00523a3b87",
+                    "diff": "NOV",
+                    "level": 6
+                },
+                {
+                    "hash": "2cce7f44b5ad886898f25dd68123e48561728ed0",
+                    "diff": "ADV",
+                    "level": 13
+                },
+                {
+                    "hash": "c4b15d89e85a0cc6211629c830ab097eac1230f2",
+                    "diff": "EXH",
+                    "level": 16
+                },
+                {
+                    "hash": "5cd5aa54f4595b445d847508cafeaa2b05b58785",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "赤壁、大炎上！！",
+            "artist": "Cranky feat.おもしろ三国志",
+            "effector": "Rushi25(曹操) Vs. R25(孫權+劉備)",
+            "charts": [
+                {
+                    "hash": "986daa46a6b9fb874d1d8446d7f39cd72ba51281",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Op.I《fear-TITΛN-》",
+            "artist": "xi VS かねこちはる",
+            "effector": "ws VS インペリアル",
+            "charts": [
+                {
+                    "hash": "b72707aadeea306b783e5c0439548d5ee8e8b0e2",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Op.I《fear-TITAN》",
+            "artist": "xi vs かねこちはる",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "cd669a13a80bc822af37509df0a85b3f80d95a2e",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Ωκεανος",
+            "artist": "cosMo@暴走P",
+            "effector": "Canonico",
+            "charts": [
+                {
+                    "hash": "0e2f9a345d0f98e28ba572e6650314dcc3506a44",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Do the IDOL!! ～断崖絶壁チュパカブラ～",
+            "artist": "天空橋朋花、エミリー スチュアート、七尾百合子、永吉 昴、伊吹 翼",
+            "effector": "qop",
+            "charts": [
+                {
+                    "hash": "b40f42971484929dd6416f906a4d3d26c9607415",
+                    "diff": "NOV",
+                    "level": 4
+                },
+                {
+                    "hash": "9b6256e6b643f0137858aaf97487a2c114940530",
+                    "diff": "ADV",
+                    "level": 10
+                },
+                {
+                    "hash": "febea465dd7836e9290fdabd8b2027102b5b05e7",
+                    "diff": "EXH",
+                    "level": 15
+                },
+                {
+                    "hash": "9795125c4bf32b176b092843ac11125cdf532b74",
+                    "diff": "INF",
+                    "level": 17
+                }
+            ]
+        },
+        {
+            "title": "DUAL BREAKER XX",
+            "artist": "Srav3R vs Getty",
+            "effector": "Kitsura",
+            "charts": [
+                {
+                    "hash": "584dd46250de334ff6e9ae82f3addbd361eb9456",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Attractor Dimension",
+            "artist": "Laur",
+            "effector": "Red LimE-ade",
+            "charts": [
+                {
+                    "hash": "7e3d09d1bb34f21da1da29d53cad762b1fdf0723",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Rush-Hour",
+            "artist": "litmus*",
+            "effector": "qop",
+            "charts": [
+                {
+                    "hash": "a3351c520c698c2e126712d325336bcbe53f57bb",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Dragon Blade -The Arrange-",
+            "artist": "BEMANI Sound Team \"あさき\" & RENO",
+            "effector": "真倉龍",
+            "charts": [
+                {
+                    "hash": "bb417b7803982f0e1afe0f4103bf0f9fdf5a3b72",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Everlasting Liberty",
+            "artist": "Kobaryo",
+            "effector": "newcomer",
+            "charts": [
+                {
+                    "hash": "7f21e06f7daf38ec0fb69c6282b3caa2a897bc7a",
+                    "diff": "EXH",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Unwelcome School (MRM REMIX)",
+            "artist": "ミツキヨ Remixed by モリモリあつし",
+            "effector": "海狐",
+            "charts": [
+                {
+                    "hash": "044ed7a2f7fd7b2081b77b4f06e33b4bf292dd41",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Climax",
+            "artist": "USAO",
+            "effector": "qop",
+            "charts": [
+                {
+                    "hash": "10e546a0cc8cef7b11c9b2f4d52d599c194e33a8",
+                    "diff": "EXH",
+                    "level": 18
+                },
+                {
+                    "hash": "2f72965cf6dd4fa8754fecc8408f75e82ea703b7",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Sigmund",
+            "artist": "Gram",
+            "effector": "ROBLE",
+            "charts": [
+                {
+                    "hash": "9d3c7c093758fc5d384021e5fdd13e0f27c1e855",
+                    "diff": "EXH",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "ギターと孤独と蒼い惑星／アニメ「ぼっち・ざ・ろっく！」より",
+            "artist": "結束バンド",
+            "effector": "AdeleineSummy",
+            "charts": [
+                {
+                    "hash": "faf5589d4bb857ee1912d1648b5693728396e026",
+                    "diff": "NOV",
+                    "level": 4
+                },
+                {
+                    "hash": "62a01edc40fb9df980ca407579817a017d38b9dd",
+                    "diff": "ADV",
+                    "level": 11
+                },
+                {
+                    "hash": "60833bc2a98ed5b0ccc8c3d75cb9208f70683e76",
+                    "diff": "EXH",
+                    "level": 16
+                },
+                {
+                    "hash": "962a5afb525f8651577ac933abf73a4ca86c75d9",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "ONE AND ONLY",
+            "artist": "Yuta Imai",
+            "effector": "9*G1",
+            "charts": [
+                {
+                    "hash": "bca44769b68967595c700b4ca3dfa9d7552c7c62",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "盟月",
+            "artist": "打打だいず",
+            "effector": "NARU",
+            "charts": [
+                {
+                    "hash": "e060cbee4baa65bc5cdb143ad9d384ad64a68d79",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Asmodeus _Be loyal to your desires_",
+            "artist": "Garbagecan vs. CS4W",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "193bf5420347a10d2ec9532d9fa5721807d058d5",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "DX超野生！サバイバルずんど子ちゃん",
+            "artist": "IOSYS TRAX with ちよこ",
+            "effector": "にのみやはと",
+            "charts": [
+                {
+                    "hash": "81fb4a629defe85b3e010ddbb0748b6b186f9523",
+                    "diff": "NOV",
+                    "level": 6
+                },
+                {
+                    "hash": "fe460e1e7766eabbe8b50e895db10be227cc1f97",
+                    "diff": "ADV",
+                    "level": 12
+                },
+                {
+                    "hash": "178d73ad29cdf36d0a308179e5292b0d5ed5448a",
+                    "diff": "EXH",
+                    "level": 17
+                }
+            ]
+        },
+        {
+            "title": "Gemini",
+            "artist": "Yousei Teitoku",
+            "effector": "Noooooong",
+            "charts": [
+                {
+                    "hash": "5280afdac172f88643388e4c994abfb62a20e944",
+                    "diff": "EXH",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "失礼しますが、RIP♡ (ReeK Remix)",
+            "artist": "Mori Calliope + ReeK",
+            "effector": "TEAM NEON",
+            "charts": [
+                {
+                    "hash": "1136d327db130b70fd7705ff92dc742a9698fb5c",
+                    "diff": "EXH",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Re:wind",
+            "artist": "MisoilePunch♪",
+            "effector": "furoa♪",
+            "charts": [
+                {
+                    "hash": "b5ede28662d157d6669f7b2f05b250d0910abaa7",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Deceiver",
+            "artist": "Laur vs M1shamo",
+            "effector": "FY",
+            "charts": [
+                {
+                    "hash": "37903f99df6cade6633eedff85c84a6e21d37a97",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Giselle",
+            "artist": "Widowmaker",
+            "effector": "1CHiN05E",
+            "charts": [
+                {
+                    "hash": "24e3b1f0b550afacab502d2adc52b97dcf570741",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Pseudo-Church",
+            "artist": "salad savior",
+            "effector": "FY",
+            "charts": [
+                {
+                    "hash": "00591bdd4d7c5553c529edef78a1e84982e1a619",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "WACCA ULTRA DREAM MEGAMIX",
+            "artist": "USAO & Kobaryo",
+            "effector": "QOP MEGAMIX",
+            "charts": [
+                {
+                    "hash": "ce8e55ce4e40bfe8f5e8a5534bd342e33cd29672",
+                    "diff": "NOV",
+                    "level": 9
+                },
+                {
+                    "hash": "d35f1e371c93498915958329b92d1162f380da8f",
+                    "diff": "ADV",
+                    "level": 15
+                },
+                {
+                    "hash": "355a7a4682b5fd49938418d6fa10d2bbfc88f906",
+                    "diff": "EXH",
+                    "level": 18
+                },
+                {
+                    "hash": "c37af7d4bf3f7e0be4a7c2ab6bbf1ccd0731a65e",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "Great Journey",
+            "artist": "歌: 島村卯月、渋谷凛、本田未央",
+            "effector": "冷凍ヨーグルト(Froyo)",
+            "charts": [
+                {
+                    "hash": "f73d1e4360d25a0ccd57e811ace05f9c2955dde8",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Complete Game Victory",
+            "artist": "Numb'n'dub",
+            "effector": "Rushi25",
+            "charts": [
+                {
+                    "hash": "001109f85cb54b2608c0a4a26a4ada879e82bd4b",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "明滅の果てに",
+            "artist": "ELFENSJóN",
+            "effector": "furoaとR25",
+            "charts": [
+                {
+                    "hash": "79a66c525bc208e1d887098d9c6a1512889de9e4",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "地球最後の告白を",
+            "artist": "kemu feat. ATSUMI UEDA",
+            "effector": "Real",
+            "charts": [
+                {
+                    "hash": "2c70f58a80da5978c2f654b7076307fa8ac14a92",
+                    "diff": "INF",
+                    "level": 20
+                }
+            ]
+        },
+        {
+            "title": "ラビットホール feat. 初音ミク",
+            "artist": "DECO*27",
+            "effector": "FY",
+            "charts": [
+                {
+                    "hash": "c10b52198db7cec729d1b7f228f6612658f8fad7",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "オーバーライド",
+            "artist": "吉田夜世",
+            "effector": "Heartilly's loyal canis",
+            "charts": [
+                {
+                    "hash": "760ea501eb9eaabca342a2df4106f3cd03be894c",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "激運！七福ハッピークルー",
+            "artist": "コバヤシユウヤ(IOSYS) feat.山本椛(monotone)",
+            "effector": "qop",
+            "charts": [
+                {
+                    "hash": "f53713955d7a16192d5c93d6e4720212c0635b2f",
+                    "diff": "NOV",
+                    "level": 6
+                },
+                {
+                    "hash": "c8b396b2a657182e7fffb37f1a8ea0efdf0110c4",
+                    "diff": "ADV",
+                    "level": 12
+                },
+                {
+                    "hash": "a8cfa3ad496e91df40c78a066f46782c7a2db62c",
+                    "diff": "EXH",
+                    "level": 15
+                },
+                {
+                    "hash": "a8ce521599681ccc552d5b243dc01213552c1899",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "World's end",
+            "artist": "Noah",
+            "effector": "qop",
+            "charts": [
+                {
+                    "hash": "5a4086f9c082c10cd00480f760931e84fcc19595",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "GET FREE",
+            "artist": "Yuta Imai & Kobaryo",
+            "effector": "ν-order Vs. TRICK Jr.",
+            "charts": [
+                {
+                    "hash": "520d11ec1223ed3f0845c2d502e7073a289f5313",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Astral Quantization",
+            "artist": "Dj Grimoire",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "ceb7679c808521246482499c04b7ffa759c6c674",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Steps for Victory",
+            "artist": "kors k × nagomu tamaki × BEMANI Sound Team \"U1\" with taru",
+            "effector": "P3P × G11K × 9*G1",
+            "charts": [
+                {
+                    "hash": "5dcdf092416d21063708302742b8620434a723fe",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Oracle",
+            "artist": "DJ Noriken",
+            "effector": "ivwsbbsai vs FY",
+            "charts": [
+                {
+                    "hash": "52bc6ce2ab2ee8da9d7486580f2bff6fc7b4f8ed",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Baphomet",
+            "artist": "Laur",
+            "effector": "P3P",
+            "charts": [
+                {
+                    "hash": "5421666a39a14901ff63cb23be6ca634d0d1f091",
+                    "diff": "NOV",
+                    "level": 7
+                },
+                {
+                    "hash": "d0ba553beea4a2b7c5b9f837c7d40cf48175a412",
+                    "diff": "ADV",
+                    "level": 14
+                },
+                {
+                    "hash": "a6bec7270b49a7dd8ccdb3474de5a77041111fa6",
+                    "diff": "EXH",
+                    "level": 17
+                },
+                {
+                    "hash": "bcf39cdf5c3ada07eb19e22e53746f277bde5d4f",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "ℝ∈Χ LUNATiCA",
+            "artist": "Kai",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "018a57aecdca70828a07b4c7d51246c4b5f6e216",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "ミ゛ッ。し゜ンぐ▶?ナ゛ン゜バー???▼?",
+            "artist": "さたぱんP feat. 初音ミク",
+            "effector": "Livie's trick",
+            "charts": [
+                {
+                    "hash": "603a1e32b493094427247021b689578197c12555",
+                    "diff": "EXH",
+                    "level": 17
+                },
+                {
+                    "hash": "ffa0fe5c2bc053e08bddc135cc4049e65c28c3ab",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Oracle",
+            "artist": "DJ Noriken",
+            "effector": "迅雷スナイパー",
+            "charts": [
+                {
+                    "hash": "704f78019d5b6e234acca6b514b95d04fa95806b",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "AlterGate",
+            "artist": "MisoilePunch♪ ~タケノコ添え~",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "8b57979ebbc7fd4e1e5882eb736b00210cad3355",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Welcome, Queen of Fiction.",
+            "artist": "打打だいず",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "8d1efe069b04e361a199579b711a44917216cbbc",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Ultimate taste",
+            "artist": "ぱらどっと",
+            "effector": "PPXIAI",
+            "charts": [
+                {
+                    "hash": "d8a9248b9ea16ef8f5bd0fecd86b478a9434f84f",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Lyrith -迷宮リリス-",
+            "artist": "ユメミド",
+            "effector": "ivwsbbsai",
+            "charts": [
+                {
+                    "hash": "a1618b1b8c74bbaabaad4c35e6acc6f6b9542f90",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Despair of ELFERIA",
+            "artist": "猫叉Master",
+            "effector": "Blue Echo",
+            "charts": [
+                {
+                    "hash": "c3089d134c9c169cc6b5a77da8d3bd4e531283b5",
+                    "diff": "INF",
+                    "level": 19
+                }
+            ]
+        },
+        {
+            "title": "Gypsy Tronic",
+            "artist": "M2U",
+            "effector": "眠活サンド",
+            "charts": [
+                {
+                    "hash": "cef0480ae5ca4b96d203c0fd4007c25ef75712dd",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        },
+        {
+            "title": "Emerald Sword",
+            "artist": "Rhapsody",
+            "effector": "EMERALDhee",
+            "charts": [
+                {
+                    "hash": "87575a3114efae86b02221010e6fe07ea8cf093c",
+                    "diff": "INF",
+                    "level": 18
+                }
+            ]
+        }
+    ]
+}
