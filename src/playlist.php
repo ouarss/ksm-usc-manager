@@ -320,6 +320,10 @@ function favMissingEntries(PDO $pdo, string $dbRoot, string $songsDir, string $n
 // Lines pointing to uninstalled folders are carried over, never lost.
 function writeFav(PDO $pdo, string $dbRoot, string $songsDir, string $name): void
 {
+    if (!is_dir($songsDir)) {
+        throw new RuntimeException('Songs folder not found, cannot write the .fav mirror: ' . $songsDir);
+    }
+
     $ids = collectionFolderIds($pdo, $name);
     $file = favPath($songsDir, $name);
 

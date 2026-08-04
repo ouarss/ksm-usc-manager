@@ -44,7 +44,13 @@ window.USC_I18N.ja = {
         '.fav ファイルからコレクション {n} 件を復元しました（{m} 曲）',
     'Your database points to ': 'データベースは ',
     ' but your songs folder is ': ' を指していますが、楽曲フォルダーは ',
-    '. The game needs matching paths.': ' です。ゲームにはパスの一致が必要です。',
+    '. The game needs matching paths. A database backup is made first.':
+        ' です。ゲームにはパスの一致が必要です。先にデータベースのバックアップを取ります。',
+    'Your songs folder is missing: ': '楽曲フォルダーが見つかりません: ',
+    '. Reconnect the tool to the right game folder (Settings), or mount that drive.':
+        '。正しいゲームフォルダーに接続し直すか（設定）、そのドライブをマウントしてください。',
+    'Update the database paths?': 'データベースのパスを更新しますか？',
+    'Back up and update paths': 'バックアップしてパスを更新',
     '{n} folders and {m} charts updated': 'フォルダー {n} 件と譜面 {m} 件を更新しました',
     '{n} new chart{s} available on Nautica.': 'Nautica に新しい譜面が {n} 件あります。',
     'Loading…': '読み込み中…',

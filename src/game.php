@@ -35,13 +35,15 @@ function gamePaths(): array
 {
     $root = resolveGameRoot();
     $paths = [
-        'game_root'          => $root,
-        'mapsdb_path'        => null,
-        'config_path'        => null,
-        'config_song_folder' => null,
-        'songs_root'         => null,
-        'db_songs_root'      => null,
-        'paths_mismatch'     => false,
+        'game_root'               => $root,
+        'mapsdb_path'             => null,
+        'config_path'             => null,
+        'config_song_folder'      => null,
+        'config_song_folder_gone' => false,
+        'songs_root'              => null,
+        'songs_root_exists'       => false,
+        'db_songs_root'           => null,
+        'paths_mismatch'          => false,
     ];
     if ($root === null) {
         return $paths;
@@ -57,7 +59,19 @@ function gamePaths(): array
         }
     }
 
-    $paths['songs_root'] = $paths['config_song_folder'] ?? $root . '/songs';
+    // A Main.cfg carried over from another machine (or an installation that
+    // moved drive) can point SongFolder at a folder that no longer exists.
+    // The configured game root is the source of truth, so a dead SongFolder
+    // never wins over an existing <root>/songs.
+    $configured = $paths['config_song_folder'];
+    $default = $root . '/songs';
+    if ($configured !== null && !is_dir($configured) && is_dir($default)) {
+        $paths['config_song_folder_gone'] = true;
+        $paths['songs_root'] = $default;
+    } else {
+        $paths['songs_root'] = $configured ?? $default;
+    }
+    $paths['songs_root_exists'] = is_dir($paths['songs_root']);
 
     $pdo = openDb($paths['mapsdb_path']);
     $paths['db_songs_root'] = dbSongsRoot($pdo);

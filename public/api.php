@@ -6,6 +6,11 @@ require_once dirname(__DIR__) . '/src/bootstrap.php';
 // The full-library view loads all ~14k charts in one response
 ini_set('memory_limit', '512M');
 
+// A single PHP warning printed before the payload makes the whole response
+// unparseable JSON (and sends the headers early). Warnings go to the log.
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+
 $action = $_GET['action'] ?? '';
 $body = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -330,17 +335,23 @@ function actionInit(): array
     if ($paths['mapsdb_path'] !== null && $paths['songs_root'] !== null) {
         $pdo = openDb($paths['mapsdb_path']);
         $dbRoot = $paths['db_songs_root'] ?? $paths['songs_root'];
-        $result['restored'] = startupSync($pdo, $dbRoot, $paths['songs_root'], $paths['mapsdb_path']);
         $result['stats'] = dbStats($pdo);
         $result['collections'] = collectionsList($pdo);
         $result['tree'] = folderTree($pdo, $dbRoot);
-        $nautica = nauticaSettings();
-        if ($nautica['enabled'] && $nautica['dir']) {
-            nauticaEnsureMeta($paths['songs_root']);
-            nauticaImportLegacy($nautica['dir'], $paths['songs_root']);
+
+        // Everything below touches the songs folder: skipped when it is not
+        // reachable (wrong game root, unmounted drive) so the database side
+        // stays readable and the UI can tell the user what to fix.
+        if ($paths['songs_root_exists']) {
+            $result['restored'] = startupSync($pdo, $dbRoot, $paths['songs_root'], $paths['mapsdb_path']);
+            $nautica = nauticaSettings();
+            if ($nautica['enabled'] && $nautica['dir']) {
+                nauticaEnsureMeta($paths['songs_root']);
+                nauticaImportLegacy($nautica['dir'], $paths['songs_root']);
+            }
+            nauticaDailyCheck();
+            $result['nautica'] = nauticaPublicState();
         }
-        nauticaDailyCheck();
-        $result['nautica'] = nauticaPublicState();
     }
 
     return $result;

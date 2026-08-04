@@ -183,8 +183,22 @@ async function boot() {
         applyInit(data);
     } catch (error) {
         toast(error.message, 'error');
+        // init died before telling us whether the folder picker is available:
+        // probe it, so a failed init never leaves the setup screen without
+        // its Browse button (the only way out on a bad game root).
+        await probeBrowse();
         showSetup();
     }
+}
+
+async function probeBrowse() {
+    try {
+        await api('browse-list', { body: { path: '' } });
+        state.canBrowse = true;
+    } catch {
+        state.canBrowse = false;
+    }
+    $('#setup-browse').classList.toggle('hidden', !state.canBrowse);
 }
 
 function applyInit(data) {
@@ -379,30 +393,43 @@ function markActiveNav() {
 function renderPathsAlert() {
     const { paths } = state;
     const alert = $('#paths-alert');
+    const text = $('#paths-alert-text');
+    const fix = $('#btn-fix-now');
+    text.innerHTML = '';
+
+    // Nothing on disk to point the database at: only the user can fix this
+    // (wrong game folder, or a drive that is not mounted).
+    if (paths.mapsdb_path && !paths.songs_root_exists) {
+        text.append(t('Your songs folder is missing: '));
+        text.appendChild(el('code', '', paths.songs_root));
+        text.append(t('. Reconnect the tool to the right game folder (Settings), or mount that drive.'));
+        fix.classList.add('hidden');
+        alert.classList.remove('hidden');
+
+        return;
+    }
+
+    fix.classList.remove('hidden');
     if (!paths.paths_mismatch) {
         alert.classList.add('hidden');
 
         return;
     }
 
-    const text = $('#paths-alert-text');
-    text.innerHTML = '';
     text.append(t('Your database points to '));
     text.appendChild(el('code', '', paths.db_songs_root));
     text.append(t(' but your songs folder is '));
     text.appendChild(el('code', '', paths.songs_root));
-    text.append(t('. The game needs matching paths.'));
+    text.append(t('. The game needs matching paths. A database backup is made first.'));
 
     alert.classList.remove('hidden');
 }
 
-$('#btn-fix-later').addEventListener('click', () => {
-    $('#paths-alert').classList.add('hidden');
-});
-
-$('#btn-fix-now').addEventListener('click', async (event) => {
+// Rewrite the database's path prefix onto the real songs folder. The server
+// takes a full maps.db backup before touching anything.
+async function applyPathFix(button, onDone = null) {
     const { paths } = state;
-    event.currentTarget.disabled = true;
+    button.disabled = true;
     try {
         const data = await api('fix-paths', {
             body: {
@@ -410,14 +437,48 @@ $('#btn-fix-now').addEventListener('click', async (event) => {
                 to: paths.songs_root,
             },
         });
+        if (onDone) onDone();
         toast(t('{n} folders and {m} charts updated', { n: formatInt(data.folders_updated), m: formatInt(data.charts_updated) }), 'success');
         await boot();
         reloadCurrentView();
     } catch (error) {
         toast(error.message, 'error');
     } finally {
-        event.currentTarget.disabled = false;
+        button.disabled = false;
     }
+}
+
+// Offered right after connecting a game folder, when the database still
+// carries the paths of another machine or drive.
+function promptPathFix() {
+    openModal((modal) => {
+        const { paths } = state;
+        modal.appendChild(el('h3', '', t('Update the database paths?')));
+
+        const note = el('p', 'note note-warn');
+        note.append(t('Your database points to '));
+        note.appendChild(el('code', '', paths.db_songs_root));
+        note.append(t(' but your songs folder is '));
+        note.appendChild(el('code', '', paths.songs_root));
+        note.append(t('. The game needs matching paths. A database backup is made first.'));
+        modal.appendChild(note);
+
+        const actions = el('div', 'modal-actions');
+        const cancel = el('button', 'btn btn-quiet', t('Later'));
+        cancel.addEventListener('click', closeModal);
+        const confirm = el('button', 'btn btn-primary', t('Back up and update paths'));
+        confirm.addEventListener('click', () => applyPathFix(confirm, closeModal));
+        actions.append(cancel, confirm);
+        modal.appendChild(actions);
+    });
+}
+
+$('#btn-fix-later').addEventListener('click', () => {
+    $('#paths-alert').classList.add('hidden');
+});
+
+$('#btn-fix-now').addEventListener('click', (event) => {
+    applyPathFix(event.currentTarget);
 });
 
 // Re-open the current view in place (after a path fix, a collection edit…).
@@ -870,6 +931,9 @@ async function connectRoot(path, button = null, onError = null) {
         closeModal();
         applyInit(data);
         toast(t('Game folder connected'), 'success');
+        if (data.paths.paths_mismatch && data.paths.songs_root_exists) {
+            promptPathFix();
+        }
     } catch (error) {
         if (onError) onError(error);
         else toast(error.message, 'error');

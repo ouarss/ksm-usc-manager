@@ -44,7 +44,13 @@ window.USC_I18N.ko = {
         '.fav 파일에서 컬렉션 {n}개를 복원했습니다 ({m}곡)',
     'Your database points to ': '데이터베이스는 ',
     ' but your songs folder is ': ' 을(를) 가리키지만 곡 폴더는 ',
-    '. The game needs matching paths.': ' 입니다. 게임은 두 경로가 일치해야 합니다.',
+    '. The game needs matching paths. A database backup is made first.':
+        ' 입니다. 게임은 두 경로가 일치해야 합니다. 먼저 데이터베이스를 백업합니다.',
+    'Your songs folder is missing: ': '곡 폴더를 찾을 수 없습니다: ',
+    '. Reconnect the tool to the right game folder (Settings), or mount that drive.':
+        '. 설정에서 올바른 게임 폴더로 다시 연결하거나 해당 드라이브를 마운트하세요.',
+    'Update the database paths?': '데이터베이스 경로를 업데이트할까요?',
+    'Back up and update paths': '백업 후 경로 업데이트',
     '{n} folders and {m} charts updated': '폴더 {n}개와 채보 {m}개를 업데이트했습니다',
     '{n} new chart{s} available on Nautica.': 'Nautica에 새 채보가 {n}개 있습니다.',
     'Loading…': '불러오는 중…',

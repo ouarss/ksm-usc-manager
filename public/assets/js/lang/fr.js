@@ -46,7 +46,13 @@ window.USC_I18N.fr = {
         '{n} collection{s} restaurée{s} depuis les fichiers .fav ({m} musiques)',
     'Your database points to ': 'Ta base de données pointe vers ',
     ' but your songs folder is ': ' mais ton dossier de musiques est ',
-    '. The game needs matching paths.': '. Le jeu a besoin de chemins corrects.',
+    '. The game needs matching paths. A database backup is made first.':
+        '. Le jeu a besoin de chemins corrects. Une sauvegarde de la base est faite avant.',
+    'Your songs folder is missing: ': 'Ton dossier de musiques est introuvable : ',
+    '. Reconnect the tool to the right game folder (Settings), or mount that drive.':
+        '. Reconnecte l\'outil au bon dossier de jeu (Réglages), ou monte ce lecteur.',
+    'Update the database paths?': 'Mettre à jour les chemins de la base ?',
+    'Back up and update paths': 'Sauvegarder et corriger les chemins',
     '{n} folders and {m} charts updated': '{n} dossiers et {m} charts mis à jour',
     '{n} new chart{s} available on Nautica.': '{n} nouvelle{s} chart{s} disponible{s} sur Nautica.',
     'Loading…': 'Chargement…',

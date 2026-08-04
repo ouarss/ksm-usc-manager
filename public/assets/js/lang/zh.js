@@ -44,7 +44,13 @@ window.USC_I18N.zh = {
         '已从 .fav 文件恢复 {n} 个收藏夹（{m} 首歌曲）',
     'Your database points to ': '数据库指向 ',
     ' but your songs folder is ': '，但歌曲文件夹是 ',
-    '. The game needs matching paths.': '。游戏需要两者路径一致。',
+    '. The game needs matching paths. A database backup is made first.':
+        '。游戏需要两者路径一致。更新前会先备份数据库。',
+    'Your songs folder is missing: ': '找不到歌曲文件夹：',
+    '. Reconnect the tool to the right game folder (Settings), or mount that drive.':
+        '。请在“设置”中重新连接到正确的游戏文件夹，或挂载该驱动器。',
+    'Update the database paths?': '要更新数据库路径吗？',
+    'Back up and update paths': '备份并更新路径',
     '{n} folders and {m} charts updated': '已更新 {n} 个文件夹和 {m} 个谱面',
     '{n} new chart{s} available on Nautica.': 'Nautica 上有 {n} 个新谱面。',
     'Loading…': '加载中…',
