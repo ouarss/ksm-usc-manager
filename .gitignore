@@ -8,6 +8,6 @@ backups/
 Thumbs.db
 desktop.ini
 
-# Documentation interne (structure/instructions), gardee locale, jamais publiee
-
-
+# Documentation interne, gardee locale, jamais publiee
+*.md
+!README.md
