@@ -44,14 +44,19 @@ function handle(string $action, array $body): never
             if ($root === '' || !is_file($root . '/maps.db')) {
                 jsonError('No maps.db in this folder: ' . ($root ?: '(empty)'));
             }
-            saveSettings(['game_root' => $root] + loadSettings());
+            $settings = loadSettings();
+            unset($settings['disconnected']); // an explicit connect lifts the disconnect
+            $settings['game_root'] = $root;
+            saveSettings($settings);
             jsonResponse(actionInit());
 
-        // Forget the configured game root (nothing else is touched): the
-        // next init falls back to the setup screen.
+        // Forget the configured game root and mark the tool as disconnected, so
+        // auto-detection does not immediately re-find the installation next to
+        // the tool. The next init falls back to the setup screen.
         case 'disconnect':
             $settings = loadSettings();
             unset($settings['game_root']);
+            $settings['disconnected'] = true;
             saveSettings($settings);
             jsonResponse(['ok' => true]);
     }
@@ -305,6 +310,15 @@ function handle(string $action, array $body): never
             }
             backupDb($paths['mapsdb_path']);
             jsonResponse(fixPaths($pdo, $from, $to));
+
+        // Rewrite a stale SongFolder in Main.cfg onto the real songs folder, so
+        // the game's next scan indexes the right place (Main.cfg backed up first).
+        case 'fix-config':
+            if ($paths['config_path'] === null) {
+                jsonError('No Main.cfg found to update');
+            }
+            rewriteSongFolder($paths['config_path'], $songsRoot);
+            jsonResponse(['ok' => true]);
     }
 
     jsonError('Unknown action: ' . $action, 404);

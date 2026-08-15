@@ -49,6 +49,17 @@ window.USC_I18N.ko = {
     'Your songs folder is missing: ': '곡 폴더를 찾을 수 없습니다: ',
     '. Reconnect the tool to the right game folder (Settings), or mount that drive.':
         '. 설정에서 올바른 게임 폴더로 다시 연결하거나 해당 드라이브를 마운트하세요.',
+    'Your Main.cfg points at a songs folder that no longer exists: ':
+        'Main.cfg가 더 이상 존재하지 않는 곡 폴더를 가리킵니다: ',
+    '. The game will index nothing until this is fixed — it should point to ':
+        '. 이 문제를 고치기 전까지 게임은 아무것도 인덱싱하지 않습니다 — 다음을 가리켜야 합니다: ',
+    '. A backup of Main.cfg is made first.':
+        '. 먼저 Main.cfg를 백업합니다.',
+    'Your song index is empty: launch the game once to build it. Your collections and scores are kept.':
+        '곡 인덱스가 비어 있습니다: 게임을 한 번 실행해 생성하세요. 컬렉션과 점수는 유지됩니다.',
+    'Main.cfg updated — launch the game to rebuild its song index.':
+        'Main.cfg를 업데이트했습니다 — 게임을 실행해 곡 인덱스를 다시 만드세요.',
+    'Fix Main.cfg': 'Main.cfg 수정',
     'Update the database paths?': '데이터베이스 경로를 업데이트할까요?',
     'Back up and update paths': '백업 후 경로 업데이트',
     '{n} folders and {m} charts updated': '폴더 {n}개와 채보 {m}개를 업데이트했습니다',

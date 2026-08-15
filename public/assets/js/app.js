@@ -67,6 +67,7 @@ function applyStaticI18n() {
     set('#btn-rename', 'Rename');
     set('#btn-delete', 'Delete');
     set('#btn-fix-now', 'Update paths now');
+    set('#btn-fix-config', 'Fix Main.cfg');
     set('#btn-fix-later', 'Later');
     set('#btn-nautica-open', 'Open Nautica');
     set('#btn-nautica-later', 'Later');
@@ -391,11 +392,14 @@ function markActiveNav() {
 // machine or drive. Browsing keeps working either way, but the game itself
 // reads those paths — offer the fix upfront.
 function renderPathsAlert() {
-    const { paths } = state;
+    const { paths, stats } = state;
     const alert = $('#paths-alert');
     const text = $('#paths-alert-text');
-    const fix = $('#btn-fix-now');
+    const fixPaths = $('#btn-fix-now');
+    const fixConfig = $('#btn-fix-config');
     text.innerHTML = '';
+    fixPaths.classList.add('hidden');
+    fixConfig.classList.add('hidden');
 
     // Nothing on disk to point the database at: only the user can fix this
     // (wrong game folder, or a drive that is not mounted).
@@ -403,13 +407,36 @@ function renderPathsAlert() {
         text.append(t('Your songs folder is missing: '));
         text.appendChild(el('code', '', paths.songs_root));
         text.append(t('. Reconnect the tool to the right game folder (Settings), or mount that drive.'));
-        fix.classList.add('hidden');
         alert.classList.remove('hidden');
 
         return;
     }
 
-    fix.classList.remove('hidden');
+    // Main.cfg carries a dead SongFolder (usually copied from another machine).
+    // The tool falls back to <root>/songs to stay usable, but the game reads
+    // Main.cfg literally — its next scan would index nothing. Offer to fix it.
+    if (paths.config_song_folder_gone) {
+        text.append(t('Your Main.cfg points at a songs folder that no longer exists: '));
+        text.appendChild(el('code', '', paths.config_song_folder));
+        text.append(t('. The game will index nothing until this is fixed — it should point to '));
+        text.appendChild(el('code', '', paths.songs_root));
+        text.append(t('. A backup of Main.cfg is made first.'));
+        fixConfig.classList.remove('hidden');
+        alert.classList.remove('hidden');
+
+        return;
+    }
+
+    // maps.db is reachable and songs exist on disk, but no chart is indexed:
+    // only the game builds Folders/Charts, so send the user there. Collections
+    // and scores live in other tables and are kept.
+    if (paths.mapsdb_path && paths.songs_root_exists && stats && stats.charts === 0) {
+        text.append(t('Your song index is empty: launch the game once to build it. Your collections and scores are kept.'));
+        alert.classList.remove('hidden');
+
+        return;
+    }
+
     if (!paths.paths_mismatch) {
         alert.classList.add('hidden');
 
@@ -421,6 +448,7 @@ function renderPathsAlert() {
     text.append(t(' but your songs folder is '));
     text.appendChild(el('code', '', paths.songs_root));
     text.append(t('. The game needs matching paths. A database backup is made first.'));
+    fixPaths.classList.remove('hidden');
 
     alert.classList.remove('hidden');
 }
@@ -473,12 +501,32 @@ function promptPathFix() {
     });
 }
 
+// Rewrite Main.cfg's SongFolder onto the real songs folder (the game scans it
+// literally). The server backs Main.cfg up first, then we re-init.
+async function applyConfigFix(button) {
+    button.disabled = true;
+    try {
+        await api('fix-config', { body: {} });
+        toast(t('Main.cfg updated — launch the game to rebuild its song index.'), 'success');
+        await boot();
+        reloadCurrentView();
+    } catch (error) {
+        toast(error.message, 'error');
+    } finally {
+        button.disabled = false;
+    }
+}
+
 $('#btn-fix-later').addEventListener('click', () => {
     $('#paths-alert').classList.add('hidden');
 });
 
 $('#btn-fix-now').addEventListener('click', (event) => {
     applyPathFix(event.currentTarget);
+});
+
+$('#btn-fix-config').addEventListener('click', (event) => {
+    applyConfigFix(event.currentTarget);
 });
 
 // Re-open the current view in place (after a path fix, a collection edit…).
@@ -931,7 +979,9 @@ async function connectRoot(path, button = null, onError = null) {
         closeModal();
         applyInit(data);
         toast(t('Game folder connected'), 'success');
-        if (data.paths.paths_mismatch && data.paths.songs_root_exists) {
+        // A dead Main.cfg is the first thing to fix (its banner is already up);
+        // don't stack the path-fix modal on top — offer it once that's sorted.
+        if (data.paths.paths_mismatch && data.paths.songs_root_exists && !data.paths.config_song_folder_gone) {
             promptPathFix();
         }
     } catch (error) {
