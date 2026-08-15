@@ -13,6 +13,14 @@ function resolveGameRoot(): ?string
         }
     }
 
+    // The user explicitly disconnected: skip auto-detection. Otherwise the
+    // installation sitting next to the tool (portable layout: the tool lives
+    // inside the game folder) would be re-detected immediately and Disconnect
+    // would be a no-op. Reconnecting via set-root clears the flag.
+    if (!empty($settings['disconnected'])) {
+        return null;
+    }
+
     $candidates = [
         normalizePath(dirname(APP_ROOT)),           // repo root
         normalizePath(dirname(APP_ROOT)) . '/bin',  // game working dir in the repo
@@ -79,6 +87,41 @@ function gamePaths(): array
         && strcasecmp($paths['db_songs_root'], $paths['songs_root']) !== 0;
 
     return $paths;
+}
+
+// Rewrite the SongFolder line in Main.cfg to point at the real songs folder.
+// The game reads this value literally; a stale one (copied from another
+// machine) makes its next scan index nothing. Main.cfg is backed up first.
+function rewriteSongFolder(string $configPath, string $songsRoot): void
+{
+    $raw = file_get_contents($configPath);
+    if ($raw === false) {
+        throw new RuntimeException('Cannot read Main.cfg');
+    }
+    // Keep the first backup as the true original: a second run must not
+    // overwrite it with an already-rewritten Main.cfg.
+    if (!is_file($configPath . '.bak') && !copy($configPath, $configPath . '.bak')) {
+        throw new RuntimeException('Cannot back up Main.cfg');
+    }
+    // USC stores a quoted Windows path (backslashes). A callback avoids
+    // preg replacement-string escaping on the backslashes. `[^\r\n]*` (not
+    // `.*$`) leaves the line's original CRLF untouched — `.` would eat the \r;
+    // `[ \t]*` (not `\s*`) around the `=` cannot swallow the newline of an
+    // empty-valued line and destroy the next one.
+    $winPath = str_replace('/', '\\', $songsRoot);
+    $new = preg_replace_callback(
+        '/^([ \t]*SongFolder[ \t]*=[ \t]*)[^\r\n]*/m',
+        static fn (array $m): string => $m[1] . '"' . $winPath . '"',
+        $raw,
+        1,
+        $count
+    );
+    if ($new === null || $count === 0) {
+        throw new RuntimeException('No SongFolder line found in Main.cfg');
+    }
+    if (file_put_contents($configPath, $new) === false) {
+        throw new RuntimeException('Cannot write Main.cfg');
+    }
 }
 
 function parseSongFolder(string $configPath, string $gameRoot): ?string

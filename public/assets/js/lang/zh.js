@@ -49,6 +49,17 @@ window.USC_I18N.zh = {
     'Your songs folder is missing: ': '找不到歌曲文件夹：',
     '. Reconnect the tool to the right game folder (Settings), or mount that drive.':
         '。请在“设置”中重新连接到正确的游戏文件夹，或挂载该驱动器。',
+    'Your Main.cfg points at a songs folder that no longer exists: ':
+        '你的 Main.cfg 指向一个已不存在的歌曲文件夹：',
+    '. The game will index nothing until this is fixed — it should point to ':
+        '。在修正之前游戏不会索引任何内容——它应指向 ',
+    '. A backup of Main.cfg is made first.':
+        '。会先备份 Main.cfg。',
+    'Your song index is empty: launch the game once to build it. Your collections and scores are kept.':
+        '你的歌曲索引为空：启动一次游戏来建立它。你的收藏和成绩会保留。',
+    'Main.cfg updated — launch the game to rebuild its song index.':
+        'Main.cfg 已更新——启动游戏以重建其歌曲索引。',
+    'Fix Main.cfg': '修正 Main.cfg',
     'Update the database paths?': '要更新数据库路径吗？',
     'Back up and update paths': '备份并更新路径',
     '{n} folders and {m} charts updated': '已更新 {n} 个文件夹和 {m} 个谱面',

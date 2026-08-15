@@ -49,6 +49,17 @@ window.USC_I18N.ja = {
     'Your songs folder is missing: ': '楽曲フォルダーが見つかりません: ',
     '. Reconnect the tool to the right game folder (Settings), or mount that drive.':
         '。正しいゲームフォルダーに接続し直すか（設定）、そのドライブをマウントしてください。',
+    'Your Main.cfg points at a songs folder that no longer exists: ':
+        'Main.cfg は存在しない楽曲フォルダーを指しています: ',
+    '. The game will index nothing until this is fixed — it should point to ':
+        '。修正するまでゲームは何もインデックスしません。次を指す必要があります: ',
+    '. A backup of Main.cfg is made first.':
+        '。先に Main.cfg のバックアップを取ります。',
+    'Your song index is empty: launch the game once to build it. Your collections and scores are kept.':
+        '楽曲インデックスが空です。一度ゲームを起動して作成してください。コレクションとスコアは保持されます。',
+    'Main.cfg updated — launch the game to rebuild its song index.':
+        'Main.cfg を更新しました。ゲームを起動して楽曲インデックスを再構築してください。',
+    'Fix Main.cfg': 'Main.cfg を修正',
     'Update the database paths?': 'データベースのパスを更新しますか？',
     'Back up and update paths': 'バックアップしてパスを更新',
     '{n} folders and {m} charts updated': 'フォルダー {n} 件と譜面 {m} 件を更新しました',

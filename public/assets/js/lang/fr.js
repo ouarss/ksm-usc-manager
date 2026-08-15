@@ -51,6 +51,17 @@ window.USC_I18N.fr = {
     'Your songs folder is missing: ': 'Ton dossier de musiques est introuvable : ',
     '. Reconnect the tool to the right game folder (Settings), or mount that drive.':
         '. Reconnecte l\'outil au bon dossier de jeu (Réglages), ou monte ce lecteur.',
+    'Your Main.cfg points at a songs folder that no longer exists: ':
+        'Ton Main.cfg pointe vers un dossier de musiques qui n\'existe plus : ',
+    '. The game will index nothing until this is fixed — it should point to ':
+        '. Le jeu n\'indexera rien tant que ce n\'est pas corrigé — il devrait pointer vers ',
+    '. A backup of Main.cfg is made first.':
+        '. Une sauvegarde de Main.cfg est faite avant.',
+    'Your song index is empty: launch the game once to build it. Your collections and scores are kept.':
+        'Ton index de musiques est vide : lance le jeu une fois pour le construire. Tes collections et scores sont conservés.',
+    'Main.cfg updated — launch the game to rebuild its song index.':
+        'Main.cfg mis à jour — lance le jeu pour reconstruire son index de musiques.',
+    'Fix Main.cfg': 'Corriger Main.cfg',
     'Update the database paths?': 'Mettre à jour les chemins de la base ?',
     'Back up and update paths': 'Sauvegarder et corriger les chemins',
     '{n} folders and {m} charts updated': '{n} dossiers et {m} charts mis à jour',
