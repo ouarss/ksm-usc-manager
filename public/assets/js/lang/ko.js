@@ -262,4 +262,39 @@ window.USC_I18N.ko = {
     'Old path — e.g. E:\\Games\\USC\\songs': '이전 경로 — 예: E:\\Games\\USC\\songs',
     'New path — e.g. Z:\\Games\\USC\\songs': '새 경로 — 예: Z:\\Games\\USC\\songs',
     'Replace paths': '경로 바꾸기',
+
+    // .fav mirror sync (audit & fix after a game-folder move)
+    'Review collections': '컬렉션 확인',
+    'Fix everything': '모두 복구',
+    '{n} collection{s} no longer match their .fav mirror files (this happens when the game rebuilds its index). The mirrors hold the good copy.':
+        '컬렉션 {n}개가 .fav 미러 파일과 일치하지 않습니다(게임이 인덱스를 다시 만들 때 발생합니다). 올바른 내용은 미러에 있습니다.',
+    'Fix everything?': '모두 복구할까요?',
+    'A full database backup is taken first, then:': '먼저 데이터베이스 전체 백업을 만든 뒤:',
+    'Rewrite the stale SongFolder in Main.cfg (backed up first)': 'Main.cfg의 잘못된 SongFolder를 다시 씁니다(먼저 백업)',
+    'Update the database paths onto the songs folder': '데이터베이스 경로를 곡 폴더에 맞게 갱신합니다',
+    'Restore {n} collection{s} from the .fav mirror files': '컬렉션 {n}개를 .fav 미러에서 복원합니다',
+    'Back up and fix': '백업 후 복구',
+    '{c} skipped: {r}': '{c} 건너뜀: {r}',
+    'Nothing to fix.': '복구할 것이 없습니다.',
+    'Edit a diverged collection?': '어긋난 컬렉션을 수정할까요?',
+    'The .fav mirror of "{c}" differs from the database. Editing now regenerates the mirror from the database and that difference is lost. If the mirror holds the good copy (after a game re-index), restore it first from the Collections page.':
+        '"{c}"의 .fav 미러가 데이터베이스와 다릅니다. 지금 수정하면 미러가 데이터베이스 기준으로 다시 생성되어 그 차이가 사라집니다. 미러가 올바른 내용을 담고 있다면(게임 재인덱스 후) 먼저 컬렉션 페이지에서 복원하세요.',
+    'Careful: the .fav mirror of this collection diverges from the database (it may hold the good copy) and will be deleted with it.':
+        '주의: 이 컬렉션의 .fav 미러는 데이터베이스와 다르며(올바른 내용일 수 있음) 함께 삭제됩니다.',
+    'Edit anyway': '그래도 수정',
+    'Sync': '동기화',
+    'diverged': '불일치',
+    '{a} only in .fav, {b} only in database': '.fav에만 {a}개, 데이터베이스에만 {b}개',
+    'Restore from .fav': '.fav에서 복원',
+    'Rewrite .fav': '.fav 다시 쓰기',
+    'Restore "{c}" from its .fav mirror?': '"{c}"을(를) .fav 미러에서 복원할까요?',
+    'The mirror file wins: {a} song{s} only in the mirror will be added, {b} only in the database will be removed. Lines pointing to uninstalled charts stay in the file. A database backup is taken first.':
+        '미러 파일이 우선합니다: 미러에만 있는 곡 {a}개가 추가되고 데이터베이스에만 있는 곡 {b}개가 제거됩니다. 설치되지 않은 채보를 가리키는 줄은 파일에 남습니다. 먼저 데이터베이스를 백업합니다.',
+    'Back up and restore': '백업 후 복원',
+    '"{c}" restored from its .fav ({n} songs, {m} not installed)': '"{c}"을(를) .fav에서 복원했습니다(곡 {n}개, 미설치 {m}개)',
+    'Rewrite the .fav of "{c}" from the database?': '"{c}"의 .fav를 데이터베이스에서 다시 쓸까요?',
+    'The database wins: the mirror is regenerated from the collection content and loses the {a} line{s} it alone carried. The current file is saved as .fav.bak first.':
+        '데이터베이스가 우선합니다: 미러가 컬렉션 내용으로 다시 생성되어 미러에만 있던 {a}줄은 사라집니다. 현재 파일은 먼저 .fav.bak으로 저장됩니다.',
+    'Back up and rewrite': '백업 후 다시 쓰기',
+    '.fav mirror rewritten for "{c}"': '"{c}"의 .fav 미러를 다시 썼습니다',
 };

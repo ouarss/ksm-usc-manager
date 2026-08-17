@@ -290,6 +290,112 @@ function favLineResolves(string $line, array $paths, array $bases): bool
     return isset($bases[end($parts)]);
 }
 
+// Lowercased lookup maps of every song folder in the DB, relative to the DB's
+// own prefix: folderid => relative path, plus the reverse maps used to resolve
+// .fav lines (full relative path first, folder basename as fallback).
+function dbFolderMaps(PDO $pdo, string $dbRoot): array
+{
+    $prefix = str_replace('/', '\\', $dbRoot) . '\\';
+    $idToRel = [];
+    $pathToId = [];
+    $baseToId = [];
+    foreach ($pdo->query('SELECT rowid, path FROM Folders') as $row) {
+        $rel = str_starts_with($row['path'], $prefix) ? substr($row['path'], strlen($prefix)) : $row['path'];
+        $rel = mb_strtolower($rel);
+        $id = (int) $row['rowid'];
+        $idToRel[$id] = $rel;
+        $pathToId[$rel] = $id;
+        $parts = explode('\\', $rel);
+        $baseToId[end($parts)] = $id;
+    }
+
+    return [$idToRel, $pathToId, $baseToId];
+}
+
+// Compare every collection against its .fav mirror. The two normally agree
+// (each write regenerates the file); they diverge when the game rebuilds its
+// index and recycles folderids — Collections then points at the wrong songs
+// while the .fav still names the right folders — or when a .fav was edited
+// outside the tool. A line resolving to no installed folder is not a
+// divergence, just a "missing" chart (the collection's memory, see writeFav).
+// Returns per collection: status in_sync|diverged|no_fav, only_fav (installed
+// songs the mirror has and the DB rows lack), only_db (the reverse), missing.
+function favSyncStatus(PDO $pdo, string $dbRoot, string $songsDir): array
+{
+    [$idToRel, $pathToId, $baseToId] = dbFolderMaps($pdo, $dbRoot);
+    $result = [];
+
+    foreach (collectionsList($pdo) as $collection) {
+        $name = $collection['name'];
+        $file = favPath($songsDir, $name);
+        if (!is_file($file)) {
+            $result[$name] = ['status' => 'no_fav', 'only_fav' => 0, 'only_db' => 0, 'missing' => 0];
+            continue;
+        }
+
+        // Dead folderids (their Folders row was deleted by the game) have no
+        // path to compare: ignored here, exactly like writeFav ignores them.
+        $dbIds = [];
+        foreach (collectionFolderIds($pdo, $name) as $id) {
+            if (isset($idToRel[$id])) {
+                $dbIds[$id] = true;
+            }
+        }
+
+        $matched = [];
+        $onlyFav = [];
+        $missing = 0;
+        foreach (preg_split('/\r\n|\r|\n/', (string) file_get_contents($file)) as $line) {
+            $line = trim($line);
+            if ($line === '') {
+                continue;
+            }
+            $rel = mb_strtolower(str_replace('/', '\\', $line));
+            $parts = explode('\\', $rel);
+            $id = $pathToId[$rel] ?? $baseToId[end($parts)] ?? null;
+            if ($id === null) {
+                $missing++;
+            } elseif (isset($dbIds[$id])) {
+                $matched[$id] = true;
+            } else {
+                $onlyFav[$id] = true;
+            }
+        }
+        $onlyDb = count($dbIds) - count($matched);
+
+        $result[$name] = [
+            'status'   => ($onlyFav !== [] || $onlyDb > 0) ? 'diverged' : 'in_sync',
+            'only_fav' => count($onlyFav),
+            'only_db'  => $onlyDb,
+            'missing'  => $missing,
+        ];
+    }
+
+    return $result;
+}
+
+// Rebuild a collection from its .fav mirror (same matching as an import:
+// path suffix first, folder basename as fallback). The file itself is left
+// untouched — it is the source here, and its unresolved lines must survive
+// for when the missing charts get installed.
+function resyncFromFav(PDO $pdo, string $songsDir, string $name): array
+{
+    $file = favPath($songsDir, $name);
+    if (!is_file($file)) {
+        throw new RuntimeException('No .fav mirror for collection: ' . $name);
+    }
+
+    $parsed = parsePlaylistFile((string) file_get_contents($file), basename($file));
+    $match = matchPlaylist($pdo, $parsed);
+    if ($match['matched'] === []) {
+        throw new RuntimeException('No line of ' . basename($file) . ' matches an installed song — collection left untouched');
+    }
+
+    replaceCollection($pdo, $name, array_column($match['matched'], 'folderid'));
+
+    return ['matched' => count($match['matched']), 'missing' => count($match['missing'])];
+}
+
 // .fav lines of a collection that resolve to no installed folder: shown
 // greyed in the UI, and preserved when the mirror file is regenerated.
 function favMissingEntries(PDO $pdo, string $dbRoot, string $songsDir, string $name): array

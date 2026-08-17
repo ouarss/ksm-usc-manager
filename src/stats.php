@@ -39,7 +39,7 @@ function scoresOverview(PDO $pdo): array
 // point to uninstalled charts
 function collectionsOverview(PDO $pdo, string $dbRoot, string $songsDir): array
 {
-    [$paths, $bases] = dbFolderSets($pdo, $dbRoot);
+    $sync = favSyncStatus($pdo, $dbRoot, $songsDir);
     $rows = [];
 
     foreach (collectionsList($pdo) as $collection) {
@@ -52,16 +52,7 @@ function collectionsOverview(PDO $pdo, string $dbRoot, string $songsDir): array
              FROM Charts WHERE folderid IN ($idList)"
         )->fetch(PDO::FETCH_ASSOC);
 
-        $missing = 0;
-        $file = favPath($songsDir, $name);
-        if (is_file($file)) {
-            foreach (preg_split('/\r\n|\r|\n/', (string) file_get_contents($file)) as $line) {
-                $line = trim($line);
-                if ($line !== '' && !favLineResolves($line, $paths, $bases)) {
-                    $missing++;
-                }
-            }
-        }
+        $status = $sync[$name] ?? ['status' => 'no_fav', 'only_fav' => 0, 'only_db' => 0, 'missing' => 0];
 
         $rows[] = [
             'name'      => $name,
@@ -69,7 +60,10 @@ function collectionsOverview(PDO $pdo, string $dbRoot, string $songsDir): array
             'charts'    => (int) $range['charts'],
             'min_level' => (int) $range['min_level'],
             'max_level' => (int) $range['max_level'],
-            'missing'   => $missing,
+            'missing'   => $status['missing'],
+            'sync'      => $status['status'],
+            'only_fav'  => $status['only_fav'],
+            'only_db'   => $status['only_db'],
         ];
     }
 
