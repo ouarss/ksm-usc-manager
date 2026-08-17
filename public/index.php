@@ -56,6 +56,8 @@
             <p id="paths-alert-text"></p>
             <button class="btn" id="btn-fix-now">Update paths now</button>
             <button class="btn" id="btn-fix-config">Fix Main.cfg</button>
+            <button class="btn" id="btn-fav-review">Review collections</button>
+            <button class="btn" id="btn-fix-all">Fix everything</button>
             <button class="btn btn-quiet" id="btn-fix-later">Later</button>
         </div>
         <div id="nautica-alert" class="paths-alert nautica-alert hidden">

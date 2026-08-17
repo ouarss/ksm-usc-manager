@@ -6,6 +6,7 @@ const state = {
     collections: [],
     tree: [],
     canBrowse: false,
+    favDiverged: [], // collections whose DB rows no longer match their .fav mirror
     nautica: null, // { enabled, dir, new_count }
     view: { type: null, key: null, label: '' },
     // Explorer page (Songs/Charts/Artists/Effectors): scope + its filters
@@ -68,6 +69,8 @@ function applyStaticI18n() {
     set('#btn-delete', 'Delete');
     set('#btn-fix-now', 'Update paths now');
     set('#btn-fix-config', 'Fix Main.cfg');
+    set('#btn-fav-review', 'Review collections');
+    set('#btn-fix-all', 'Fix everything');
     set('#btn-fix-later', 'Later');
     set('#btn-nautica-open', 'Open Nautica');
     set('#btn-nautica-later', 'Later');
@@ -208,6 +211,7 @@ function applyInit(data) {
     state.collections = data.collections;
     state.tree = data.tree;
     state.canBrowse = Boolean(data.can_browse);
+    state.favDiverged = data.fav_diverged || [];
     $('#setup-browse').classList.toggle('hidden', !state.canBrowse);
 
     // Collections re-created from .fav files at startup (maps.db was rebuilt,
@@ -397,9 +401,13 @@ function renderPathsAlert() {
     const text = $('#paths-alert-text');
     const fixPaths = $('#btn-fix-now');
     const fixConfig = $('#btn-fix-config');
+    const fixAll = $('#btn-fix-all');
+    const favReview = $('#btn-fav-review');
     text.innerHTML = '';
     fixPaths.classList.add('hidden');
     fixConfig.classList.add('hidden');
+    fixAll.classList.add('hidden');
+    favReview.classList.add('hidden');
 
     // Nothing on disk to point the database at: only the user can fix this
     // (wrong game folder, or a drive that is not mounted).
@@ -422,6 +430,7 @@ function renderPathsAlert() {
         text.appendChild(el('code', '', paths.songs_root));
         text.append(t('. A backup of Main.cfg is made first.'));
         fixConfig.classList.remove('hidden');
+        fixAll.classList.remove('hidden');
         alert.classList.remove('hidden');
 
         return;
@@ -438,6 +447,18 @@ function renderPathsAlert() {
     }
 
     if (!paths.paths_mismatch) {
+        // Paths are healthy: last check is the .fav mirrors. A divergence means
+        // the game rebuilt its index and recycled folderids — the collections
+        // in the DB point at the wrong songs while the mirrors kept the truth.
+        if (state.favDiverged.length) {
+            const n = state.favDiverged.length;
+            text.append(t('{n} collection{s} no longer match their .fav mirror files (this happens when the game rebuilds its index). The mirrors hold the good copy.', { n, s: plural(n) }));
+            favReview.classList.remove('hidden');
+            fixAll.classList.remove('hidden');
+            alert.classList.remove('hidden');
+
+            return;
+        }
         alert.classList.add('hidden');
 
         return;
@@ -449,6 +470,7 @@ function renderPathsAlert() {
     text.appendChild(el('code', '', paths.songs_root));
     text.append(t('. The game needs matching paths. A database backup is made first.'));
     fixPaths.classList.remove('hidden');
+    fixAll.classList.remove('hidden');
 
     alert.classList.remove('hidden');
 }
@@ -528,6 +550,97 @@ $('#btn-fix-now').addEventListener('click', (event) => {
 $('#btn-fix-config').addEventListener('click', (event) => {
     applyConfigFix(event.currentTarget);
 });
+
+$('#btn-fav-review').addEventListener('click', () => {
+    openCollectionsPage();
+});
+
+$('#btn-fix-all').addEventListener('click', promptFixAll);
+
+// One-click repair after a game-folder move: Main.cfg, the DB path prefixes,
+// then every collection whose .fav mirror diverged. Full backup server-side.
+function promptFixAll() {
+    openModal((modal) => {
+        const { paths } = state;
+        modal.appendChild(el('h3', '', t('Fix everything?')));
+        modal.appendChild(el('p', 'note', t('A full database backup is taken first, then:')));
+        const list = el('ul', 'note');
+        if (paths.config_song_folder_gone) {
+            list.appendChild(el('li', '', t('Rewrite the stale SongFolder in Main.cfg (backed up first)')));
+        }
+        if (paths.paths_mismatch) {
+            list.appendChild(el('li', '', t('Update the database paths onto the songs folder')));
+        }
+        if (state.favDiverged.length) {
+            list.appendChild(el('li', '', t('Restore {n} collection{s} from the .fav mirror files', { n: state.favDiverged.length, s: plural(state.favDiverged.length) })));
+        }
+        modal.appendChild(list);
+
+        const actions = el('div', 'modal-actions');
+        const cancel = el('button', 'btn btn-quiet', t('Cancel'));
+        cancel.addEventListener('click', closeModal);
+        const confirm = el('button', 'btn btn-primary', t('Back up and fix'));
+        confirm.addEventListener('click', () => applyFixAll(confirm));
+        actions.append(cancel, confirm);
+        modal.appendChild(actions);
+    });
+}
+
+async function applyFixAll(button) {
+    button.disabled = true;
+    try {
+        const report = await api('fix-all', { body: {} });
+        closeModal();
+        if (report.config_fixed) {
+            toast(t('Main.cfg updated — launch the game to rebuild its song index.'), 'success');
+        }
+        if (report.folders_updated || report.charts_updated) {
+            toast(t('{n} folders and {m} charts updated', { n: formatInt(report.folders_updated), m: formatInt(report.charts_updated) }), 'success');
+        }
+        if (report.resynced.length) {
+            const songs = report.resynced.reduce((sum, r) => sum + r.matched, 0);
+            toast(t('{n} collection{s} restored from .fav files ({m} songs)', { n: report.resynced.length, s: plural(report.resynced.length), m: formatInt(songs) }), 'success');
+        }
+        for (const skip of report.skipped) {
+            toast(t('{c} skipped: {r}', { c: skip.name, r: skip.reason }), 'error');
+        }
+        if (!report.config_fixed && !report.folders_updated && !report.resynced.length && !report.skipped.length) {
+            toast(t('Nothing to fix.'), 'success');
+        }
+        await boot();
+        reloadCurrentView();
+    } catch (error) {
+        toast(error.message, 'error');
+    } finally {
+        button.disabled = false;
+    }
+}
+
+// A diverged collection's .fav mirror carries content the database lost
+// (typically after the game rebuilt its index). Any write regenerates the
+// mirror from the database and destroys that copy: warn before the first one.
+function confirmDivergedWrite(name, onConfirm) {
+    const diverged = state.favDiverged.find((d) => d.name === name);
+    if (!diverged) return onConfirm();
+    openModal((modal) => {
+        modal.appendChild(el('h3', '', t('Edit a diverged collection?')));
+        modal.appendChild(el('p', 'note note-warn',
+            t('The .fav mirror of "{c}" differs from the database. Editing now regenerates the mirror from the database and that difference is lost. If the mirror holds the good copy (after a game re-index), restore it first from the Collections page.', { c: name })));
+
+        const actions = el('div', 'modal-actions');
+        const cancel = el('button', 'btn btn-quiet', t('Cancel'));
+        cancel.addEventListener('click', closeModal);
+        const confirm = el('button', 'btn btn-primary', t('Edit anyway'));
+        confirm.addEventListener('click', () => {
+            state.favDiverged = state.favDiverged.filter((d) => d.name !== name);
+            closeModal();
+            renderPathsAlert();
+            onConfirm();
+        });
+        actions.append(cancel, confirm);
+        modal.appendChild(actions);
+    });
+}
 
 // Re-open the current view in place (after a path fix, a collection edit…).
 function reloadCurrentView() {
@@ -1145,7 +1258,11 @@ function openBulkCollect() {
     });
 }
 
-async function bulkAdd(name) {
+function bulkAdd(name) {
+    confirmDivergedWrite(name, () => doBulkAdd(name));
+}
+
+async function doBulkAdd(name) {
     try {
         const data = await api('import-apply', { body: { name, folderids: [...state.selected] } });
         state.collections = data.collections;
@@ -1211,7 +1328,11 @@ function collectRow(song, name, count, isIn) {
     return item;
 }
 
-async function toggleCollection(song, name) {
+function toggleCollection(song, name) {
+    confirmDivergedWrite(name, () => doToggleCollection(song, name));
+}
+
+async function doToggleCollection(song, name) {
     try {
         const data = await api('toggle', { body: { folderid: song.folderid, collection: name } });
         state.collections = data.collections;
@@ -1257,19 +1378,22 @@ $('#btn-rename').addEventListener('click', () => {
         const cancel = el('button', 'btn btn-quiet', t('Cancel'));
         cancel.addEventListener('click', closeModal);
         const confirm = el('button', 'btn btn-primary', t('Rename'));
-        confirm.addEventListener('click', async () => {
+        confirm.addEventListener('click', () => {
             const newName = input.value.trim();
             if (!newName || newName === oldName) return closeModal();
-            try {
-                const data = await api('rename-collection', { body: { old: oldName, new: newName } });
-                state.collections = data.collections;
-                closeModal();
-                renderCollectionsNav();
-                toast(t('Collection renamed to {c}', { c: newName }), 'success');
-                loadCollection(newName);
-            } catch (error) {
-                toast(error.message, 'error');
-            }
+            // Renaming moves the .fav mirror too (delete + regenerate from DB)
+            confirmDivergedWrite(oldName, async () => {
+                try {
+                    const data = await api('rename-collection', { body: { old: oldName, new: newName } });
+                    state.collections = data.collections;
+                    closeModal();
+                    renderCollectionsNav();
+                    toast(t('Collection renamed to {c}', { c: newName }), 'success');
+                    loadCollection(newName);
+                } catch (error) {
+                    toast(error.message, 'error');
+                }
+            });
         });
         actions.append(cancel, confirm);
         modal.appendChild(actions);
@@ -1283,6 +1407,11 @@ $('#btn-delete').addEventListener('click', () => {
         modal.appendChild(el('h3', '', t('Delete {c}', { c: name })));
         modal.appendChild(el('p', 'note note-warn',
             t('The collection and its {n} entries will be removed from the database. Songs and scores are untouched. An automatic backup is made first.', { n: formatInt(count) })));
+        // Deleting also removes the .fav mirror — which may be the good copy
+        if (state.favDiverged.some((d) => d.name === name)) {
+            modal.appendChild(el('p', 'note note-warn',
+                t('Careful: the .fav mirror of this collection diverges from the database (it may hold the good copy) and will be deleted with it.')));
+        }
 
         const actions = el('div', 'modal-actions');
         const cancel = el('button', 'btn btn-quiet', t('Cancel'));
@@ -1419,23 +1548,25 @@ function showImportPreview(preview) {
         };
         updateConflict();
         input.addEventListener('input', updateConflict);
-        confirm.addEventListener('click', async () => {
+        confirm.addEventListener('click', () => {
             const name = input.value.trim();
             if (!name) return toast(t('Give the collection a name'), 'error');
-            try {
-                const data = await api('import-apply', {
-                    body: { name, folderids: preview.matched.map((song) => song.folderid) },
-                });
-                state.collections = data.collections;
-                state.stats.collections = data.collections.length;
-                closeModal();
-                renderCollectionsNav();
-                renderStats();
-                toast(t('{n} song{s} added to {c}', { n: formatInt(data.added), s: plural(data.added), c: name }), 'success');
-                loadCollection(name);
-            } catch (error) {
-                toast(error.message, 'error');
-            }
+            confirmDivergedWrite(name, async () => {
+                try {
+                    const data = await api('import-apply', {
+                        body: { name, folderids: preview.matched.map((song) => song.folderid) },
+                    });
+                    state.collections = data.collections;
+                    state.stats.collections = data.collections.length;
+                    closeModal();
+                    renderCollectionsNav();
+                    renderStats();
+                    toast(t('{n} song{s} added to {c}', { n: formatInt(data.added), s: plural(data.added), c: name }), 'success');
+                    loadCollection(name);
+                } catch (error) {
+                    toast(error.message, 'error');
+                }
+            });
         });
         actions.append(cancel, confirm);
         modal.appendChild(actions);
@@ -2398,7 +2529,7 @@ async function openCollectionsPage() {
         node.innerHTML = '';
         const page = el('div', 'page');
 
-        const table = pageTable([t('Collection'), t('Songs'), t('Charts'), t('Levels'), t('Missing'), ''], 1);
+        const table = pageTable([t('Collection'), t('Songs'), t('Charts'), t('Levels'), t('Missing'), t('Sync'), ''], 1);
         const body = table.createTBody();
         for (const collection of collections) {
             const row = body.insertRow();
@@ -2416,8 +2547,26 @@ async function openCollectionsPage() {
             } else {
                 missing.textContent = '—';
             }
+            // Database vs .fav mirror: they diverge when the game rebuilt its
+            // index (folderids recycled) or the mirror was edited by hand.
+            const sync = row.insertCell();
+            sync.className = 'num';
+            if (collection.sync === 'diverged') {
+                const badge = el('span', 'missing-badge', t('diverged'));
+                badge.title = t('{a} only in .fav, {b} only in database', { a: collection.only_fav, b: collection.only_db });
+                sync.appendChild(badge);
+            } else {
+                sync.textContent = collection.sync === 'in_sync' ? 'OK' : '—';
+            }
             const actions = row.insertCell();
             actions.className = 'num';
+            if (collection.sync === 'diverged') {
+                const restore = el('button', 'btn', t('Restore from .fav'));
+                restore.addEventListener('click', () => promptResyncFromFav(collection));
+                const rewrite = el('button', 'btn btn-quiet', t('Rewrite .fav'));
+                rewrite.addEventListener('click', () => promptResyncToFav(collection));
+                actions.append(restore, rewrite);
+            }
             const exportButton = el('button', 'btn', t('Export'));
             exportButton.addEventListener('click', () => {
                 const url = new URL('api.php', window.location.href);
@@ -2432,6 +2581,68 @@ async function openCollectionsPage() {
             page.appendChild(el('p', 'notplayed', 'No collections yet.'));
         }
         node.appendChild(page);
+    });
+}
+
+// The mirror wins: rebuild the DB collection from the .fav lines (this is the
+// recovery path after the game re-indexed and scrambled the folderids).
+function promptResyncFromFav(collection) {
+    openModal((modal) => {
+        modal.appendChild(el('h3', '', t('Restore "{c}" from its .fav mirror?', { c: collection.name })));
+        modal.appendChild(el('p', 'note note-warn',
+            t('The mirror file wins: {a} song{s} only in the mirror will be added, {b} only in the database will be removed. Lines pointing to uninstalled charts stay in the file. A database backup is taken first.', { a: collection.only_fav, s: plural(collection.only_fav), b: collection.only_db })));
+
+        const actions = el('div', 'modal-actions');
+        const cancel = el('button', 'btn btn-quiet', t('Cancel'));
+        cancel.addEventListener('click', closeModal);
+        const confirm = el('button', 'btn btn-primary', t('Back up and restore'));
+        confirm.addEventListener('click', async () => {
+            confirm.disabled = true;
+            try {
+                const data = await api('resync-from-fav', { body: { name: collection.name } });
+                state.collections = data.collections;
+                closeModal();
+                toast(t('"{c}" restored from its .fav ({n} songs, {m} not installed)', { c: collection.name, n: formatInt(data.matched), m: formatInt(data.missing) }), 'success');
+                await boot();
+                reloadCurrentView();
+            } catch (error) {
+                toast(error.message, 'error');
+            } finally {
+                confirm.disabled = false;
+            }
+        });
+        actions.append(cancel, confirm);
+        modal.appendChild(actions);
+    });
+}
+
+// The database wins: regenerate the mirror (for a stale or hand-edited .fav).
+function promptResyncToFav(collection) {
+    openModal((modal) => {
+        modal.appendChild(el('h3', '', t('Rewrite the .fav of "{c}" from the database?', { c: collection.name })));
+        modal.appendChild(el('p', 'note note-warn',
+            t('The database wins: the mirror is regenerated from the collection content and loses the {a} line{s} it alone carried. The current file is saved as .fav.bak first.', { a: collection.only_fav, s: plural(collection.only_fav) })));
+
+        const actions = el('div', 'modal-actions');
+        const cancel = el('button', 'btn btn-quiet', t('Cancel'));
+        cancel.addEventListener('click', closeModal);
+        const confirm = el('button', 'btn btn-primary', t('Back up and rewrite'));
+        confirm.addEventListener('click', async () => {
+            confirm.disabled = true;
+            try {
+                await api('resync-to-fav', { body: { name: collection.name } });
+                closeModal();
+                toast(t('.fav mirror rewritten for "{c}"', { c: collection.name }), 'success');
+                await boot();
+                reloadCurrentView();
+            } catch (error) {
+                toast(error.message, 'error');
+            } finally {
+                confirm.disabled = false;
+            }
+        });
+        actions.append(cancel, confirm);
+        modal.appendChild(actions);
     });
 }
 

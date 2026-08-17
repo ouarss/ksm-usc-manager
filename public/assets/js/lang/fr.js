@@ -265,4 +265,39 @@ window.USC_I18N.fr = {
     'Old path — e.g. E:\\Games\\USC\\songs': 'Ancien chemin — ex. E:\\Jeux\\USC\\songs',
     'New path — e.g. Z:\\Games\\USC\\songs': 'Nouveau chemin — ex. Z:\\Jeux\\USC\\songs',
     'Replace paths': 'Remplacer les chemins',
+
+    // .fav mirror sync (audit & fix after a game-folder move)
+    'Review collections': 'Voir les collections',
+    'Fix everything': 'Tout réparer',
+    '{n} collection{s} no longer match their .fav mirror files (this happens when the game rebuilds its index). The mirrors hold the good copy.':
+        '{n} collection{s} ne correspondent plus à leur miroir .fav (cela arrive quand le jeu reconstruit son index). Les miroirs détiennent la bonne copie.',
+    'Fix everything?': 'Tout réparer ?',
+    'A full database backup is taken first, then:': 'Une sauvegarde complète de la base est faite d\'abord, puis :',
+    'Rewrite the stale SongFolder in Main.cfg (backed up first)': 'Réécrire le SongFolder périmé de Main.cfg (sauvegardé d\'abord)',
+    'Update the database paths onto the songs folder': 'Mettre à jour les chemins de la base vers le dossier de musiques',
+    'Restore {n} collection{s} from the .fav mirror files': 'Restaurer {n} collection{s} depuis les miroirs .fav',
+    'Back up and fix': 'Sauvegarder et réparer',
+    '{c} skipped: {r}': '{c} ignorée : {r}',
+    'Nothing to fix.': 'Rien à réparer.',
+    'Edit a diverged collection?': 'Modifier une collection divergente ?',
+    'The .fav mirror of "{c}" differs from the database. Editing now regenerates the mirror from the database and that difference is lost. If the mirror holds the good copy (after a game re-index), restore it first from the Collections page.':
+        'Le miroir .fav de "{c}" diffère de la base. Modifier maintenant régénère le miroir depuis la base et cette différence est perdue. Si le miroir détient la bonne copie (après un ré-index du jeu), restaure-le d\'abord depuis la page Collections.',
+    'Careful: the .fav mirror of this collection diverges from the database (it may hold the good copy) and will be deleted with it.':
+        'Attention : le miroir .fav de cette collection diverge de la base (il détient peut-être la bonne copie) et sera supprimé avec elle.',
+    'Edit anyway': 'Modifier quand même',
+    'Sync': 'Synchro',
+    'diverged': 'divergente',
+    '{a} only in .fav, {b} only in database': '{a} seulement dans le .fav, {b} seulement en base',
+    'Restore from .fav': 'Restaurer depuis le .fav',
+    'Rewrite .fav': 'Réécrire le .fav',
+    'Restore "{c}" from its .fav mirror?': 'Restaurer "{c}" depuis son miroir .fav ?',
+    'The mirror file wins: {a} song{s} only in the mirror will be added, {b} only in the database will be removed. Lines pointing to uninstalled charts stay in the file. A database backup is taken first.':
+        'Le fichier miroir gagne : {a} musique{s} présentes seulement dans le miroir seront ajoutées, {b} présentes seulement en base seront retirées. Les lignes pointant vers des charts non installés restent dans le fichier. Une sauvegarde de la base est faite d\'abord.',
+    'Back up and restore': 'Sauvegarder et restaurer',
+    '"{c}" restored from its .fav ({n} songs, {m} not installed)': '"{c}" restaurée depuis son .fav ({n} musiques, {m} non installées)',
+    'Rewrite the .fav of "{c}" from the database?': 'Réécrire le .fav de "{c}" depuis la base ?',
+    'The database wins: the mirror is regenerated from the collection content and loses the {a} line{s} it alone carried. The current file is saved as .fav.bak first.':
+        'La base gagne : le miroir est régénéré depuis le contenu de la collection et perd les {a} ligne{s} qu\'il portait seul. Le fichier actuel est d\'abord copié en .fav.bak.',
+    'Back up and rewrite': 'Sauvegarder et réécrire',
+    '.fav mirror rewritten for "{c}"': 'Miroir .fav réécrit pour "{c}"',
 };

@@ -50,6 +50,19 @@ function collectionToggle(PDO $pdo, int $folderId, string $name): bool
     return true;
 }
 
+// Replace a collection's rows wholesale (a .fav resync: the file wins).
+function replaceCollection(PDO $pdo, string $name, array $folderIds): void
+{
+    $pdo->beginTransaction();
+    $del = $pdo->prepare('DELETE FROM Collections WHERE collection = :name');
+    $del->execute(['name' => $name]);
+    $ins = $pdo->prepare('INSERT OR IGNORE INTO Collections (collection, folderid) VALUES (:name, :id)');
+    foreach ($folderIds as $folderId) {
+        $ins->execute(['name' => $name, 'id' => (int) $folderId]);
+    }
+    $pdo->commit();
+}
+
 // Renaming onto an existing collection merges them (UNIQUE constraint
 // would reject the straight UPDATE for songs present in both).
 function collectionRename(PDO $pdo, string $oldName, string $newName): void

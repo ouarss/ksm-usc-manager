@@ -263,4 +263,39 @@ window.USC_I18N.ja = {
     'Old path — e.g. E:\\Games\\USC\\songs': '旧パス — 例: E:\\Games\\USC\\songs',
     'New path — e.g. Z:\\Games\\USC\\songs': '新パス — 例: Z:\\Games\\USC\\songs',
     'Replace paths': 'パスを置換',
+
+    // .fav mirror sync (audit & fix after a game-folder move)
+    'Review collections': 'コレクションを確認',
+    'Fix everything': 'すべて修復',
+    '{n} collection{s} no longer match their .fav mirror files (this happens when the game rebuilds its index). The mirrors hold the good copy.':
+        '{n} 件のコレクションが .fav ミラーファイルと一致しません（ゲームがインデックスを再構築すると起こります）。正しい内容はミラー側にあります。',
+    'Fix everything?': 'すべて修復しますか？',
+    'A full database backup is taken first, then:': 'まずデータベースの完全バックアップを作成し、その後：',
+    'Rewrite the stale SongFolder in Main.cfg (backed up first)': 'Main.cfg の古い SongFolder を書き換える（事前にバックアップ）',
+    'Update the database paths onto the songs folder': 'データベースのパスを楽曲フォルダーに合わせて更新する',
+    'Restore {n} collection{s} from the .fav mirror files': '{n} 件のコレクションを .fav ミラーから復元する',
+    'Back up and fix': 'バックアップして修復',
+    '{c} skipped: {r}': '{c} をスキップしました: {r}',
+    'Nothing to fix.': '修復するものはありません。',
+    'Edit a diverged collection?': '差異のあるコレクションを編集しますか？',
+    'The .fav mirror of "{c}" differs from the database. Editing now regenerates the mirror from the database and that difference is lost. If the mirror holds the good copy (after a game re-index), restore it first from the Collections page.':
+        '"{c}" の .fav ミラーはデータベースと異なります。今編集するとミラーがデータベースから再生成され、その差分は失われます。ミラー側が正しい場合（ゲームの再インデックス後）は、先にコレクションページから復元してください。',
+    'Careful: the .fav mirror of this collection diverges from the database (it may hold the good copy) and will be deleted with it.':
+        '注意: このコレクションの .fav ミラーはデータベースと異なり（正しい内容を保持している可能性があります）、一緒に削除されます。',
+    'Edit anyway': 'そのまま編集',
+    'Sync': '同期',
+    'diverged': '差異あり',
+    '{a} only in .fav, {b} only in database': '.fav のみ {a} 件、データベースのみ {b} 件',
+    'Restore from .fav': '.fav から復元',
+    'Rewrite .fav': '.fav を再生成',
+    'Restore "{c}" from its .fav mirror?': '"{c}" を .fav ミラーから復元しますか？',
+    'The mirror file wins: {a} song{s} only in the mirror will be added, {b} only in the database will be removed. Lines pointing to uninstalled charts stay in the file. A database backup is taken first.':
+        'ミラーファイルを優先します: ミラーのみにある {a} 曲を追加し、データベースのみにある {b} 曲を削除します。未インストールの譜面を指す行はファイルに残ります。まずデータベースをバックアップします。',
+    'Back up and restore': 'バックアップして復元',
+    '"{c}" restored from its .fav ({n} songs, {m} not installed)': '"{c}" を .fav から復元しました（{n} 曲、未インストール {m} 曲）',
+    'Rewrite the .fav of "{c}" from the database?': '"{c}" の .fav をデータベースから再生成しますか？',
+    'The database wins: the mirror is regenerated from the collection content and loses the {a} line{s} it alone carried. The current file is saved as .fav.bak first.':
+        'データベースを優先します: ミラーはコレクションの内容から再生成され、ミラーのみにあった {a} 行は失われます。現在のファイルはまず .fav.bak として保存されます。',
+    'Back up and rewrite': 'バックアップして再生成',
+    '.fav mirror rewritten for "{c}"': '"{c}" の .fav ミラーを再生成しました',
 };

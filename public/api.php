@@ -237,6 +237,31 @@ function handle(string $action, array $body): never
             deleteFav($songsRoot, $name);
             jsonResponse(['removed' => $removed, 'collections' => collectionsList($pdo)]);
 
+        // ---- .fav mirror resync (DB and mirror diverge when the game
+        // rebuilds its index and recycles folderids — see favSyncStatus) ----
+        case 'resync-from-fav':
+            $name = trim((string) ($body['name'] ?? ''));
+            if ($name === '') {
+                jsonError('Missing collection name');
+            }
+            backupDb($paths['mapsdb_path'], auto: true);
+            backupCollections($pdo, $dbRoot);
+            $report = resyncFromFav($pdo, $songsRoot, $name);
+            jsonResponse($report + ['collections' => collectionsList($pdo)]);
+
+        case 'resync-to-fav':
+            $name = trim((string) ($body['name'] ?? ''));
+            if ($name === '' || collectionFolderIds($pdo, $name) === []) {
+                jsonError('Unknown or empty collection: ' . $name);
+            }
+            // The mirror is about to lose whatever it alone carried: keep a copy
+            $file = favPath($songsRoot, $name);
+            if (is_file($file)) {
+                copy($file, $file . '.bak');
+            }
+            writeFav($pdo, $dbRoot, $songsRoot, $name);
+            jsonResponse(['ok' => true]);
+
         case 'import-preview':
             if (empty($_FILES['playlist']) || $_FILES['playlist']['error'] !== UPLOAD_ERR_OK) {
                 jsonError('No file received');
@@ -319,6 +344,48 @@ function handle(string $action, array $body): never
             }
             rewriteSongFolder($paths['config_path'], $songsRoot);
             jsonResponse(['ok' => true]);
+
+        // One-click repair after a game-folder move: full backup, then every
+        // applicable fix in dependency order — Main.cfg first (the game's next
+        // scan reads it literally), the DB path prefixes, then the collections
+        // whose .fav mirror diverged (rebuilt from the mirror, the durable copy).
+        case 'fix-all':
+            backupDb($paths['mapsdb_path']);
+            $report = [
+                'config_fixed'    => false,
+                'folders_updated' => 0,
+                'charts_updated'  => 0,
+                'resynced'        => [],
+                'skipped'         => [],
+            ];
+
+            if ($paths['config_song_folder_gone'] && $paths['config_path'] !== null) {
+                rewriteSongFolder($paths['config_path'], $songsRoot);
+                $report['config_fixed'] = true;
+            }
+
+            if ($paths['paths_mismatch'] && $paths['songs_root_exists']) {
+                $fixed = fixPaths($pdo, str_replace('/', '\\', $dbRoot), str_replace('/', '\\', $songsRoot));
+                $report['folders_updated'] = $fixed['folders_updated'];
+                $report['charts_updated'] = $fixed['charts_updated'];
+                $dbRoot = $songsRoot; // the .fav comparison below must use the new prefix
+            }
+
+            if ($paths['songs_root_exists']) {
+                backupCollections($pdo, $dbRoot);
+                foreach (favSyncStatus($pdo, $dbRoot, $songsRoot) as $name => $sync) {
+                    if ($sync['status'] !== 'diverged') {
+                        continue;
+                    }
+                    try {
+                        $report['resynced'][] = ['name' => $name] + resyncFromFav($pdo, $songsRoot, $name);
+                    } catch (Throwable $e) {
+                        $report['skipped'][] = ['name' => $name, 'reason' => $e->getMessage()];
+                    }
+                }
+            }
+
+            jsonResponse($report);
     }
 
     jsonError('Unknown action: ' . $action, 404);
@@ -340,10 +407,11 @@ function actionInit(): array
         'paths'       => $paths,
         'can_browse'  => canBrowseNatively(),
         'stats'       => null,
-        'collections' => [],
-        'tree'        => [],
-        'restored'    => [],
-        'nautica'     => null,
+        'collections'  => [],
+        'tree'         => [],
+        'restored'     => [],
+        'fav_diverged' => [],
+        'nautica'      => null,
     ];
 
     if ($paths['mapsdb_path'] !== null && $paths['songs_root'] !== null) {
@@ -358,6 +426,18 @@ function actionInit(): array
         // stays readable and the UI can tell the user what to fix.
         if ($paths['songs_root_exists']) {
             $result['restored'] = startupSync($pdo, $dbRoot, $paths['songs_root'], $paths['mapsdb_path']);
+            // Collections whose DB rows no longer match their .fav mirror
+            // (typically after the game rebuilt its index): the UI offers a
+            // per-collection resync and warns before any write on them.
+            foreach (favSyncStatus($pdo, $dbRoot, $paths['songs_root']) as $name => $sync) {
+                if ($sync['status'] === 'diverged') {
+                    $result['fav_diverged'][] = [
+                        'name'     => $name,
+                        'only_fav' => $sync['only_fav'],
+                        'only_db'  => $sync['only_db'],
+                    ];
+                }
+            }
             $nautica = nauticaSettings();
             if ($nautica['enabled'] && $nautica['dir']) {
                 nauticaEnsureMeta($paths['songs_root']);

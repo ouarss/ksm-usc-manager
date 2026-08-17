@@ -262,4 +262,39 @@ window.USC_I18N.zh = {
     'Old path — e.g. E:\\Games\\USC\\songs': '旧路径——例如 E:\\Games\\USC\\songs',
     'New path — e.g. Z:\\Games\\USC\\songs': '新路径——例如 Z:\\Games\\USC\\songs',
     'Replace paths': '替换路径',
+
+    // .fav mirror sync (audit & fix after a game-folder move)
+    'Review collections': '查看收藏夹',
+    'Fix everything': '一键修复',
+    '{n} collection{s} no longer match their .fav mirror files (this happens when the game rebuilds its index). The mirrors hold the good copy.':
+        '{n} 个收藏夹与其 .fav 镜像文件不再一致（游戏重建索引时会发生）。正确的内容保存在镜像里。',
+    'Fix everything?': '一键修复？',
+    'A full database backup is taken first, then:': '先创建数据库完整备份，然后：',
+    'Rewrite the stale SongFolder in Main.cfg (backed up first)': '重写 Main.cfg 中失效的 SongFolder（先备份）',
+    'Update the database paths onto the songs folder': '把数据库路径更新为歌曲文件夹的路径',
+    'Restore {n} collection{s} from the .fav mirror files': '从 .fav 镜像恢复 {n} 个收藏夹',
+    'Back up and fix': '备份并修复',
+    '{c} skipped: {r}': '已跳过 {c}：{r}',
+    'Nothing to fix.': '没有需要修复的内容。',
+    'Edit a diverged collection?': '要编辑不一致的收藏夹吗？',
+    'The .fav mirror of "{c}" differs from the database. Editing now regenerates the mirror from the database and that difference is lost. If the mirror holds the good copy (after a game re-index), restore it first from the Collections page.':
+        '"{c}" 的 .fav 镜像与数据库不一致。现在编辑会用数据库重新生成镜像，差异将丢失。如果镜像保存着正确内容（游戏重建索引后），请先在收藏夹页面恢复它。',
+    'Careful: the .fav mirror of this collection diverges from the database (it may hold the good copy) and will be deleted with it.':
+        '注意：该收藏夹的 .fav 镜像与数据库不一致（可能保存着正确内容），并将随之一起删除。',
+    'Edit anyway': '仍然编辑',
+    'Sync': '同步',
+    'diverged': '不一致',
+    '{a} only in .fav, {b} only in database': '{a} 个仅在 .fav 中，{b} 个仅在数据库中',
+    'Restore from .fav': '从 .fav 恢复',
+    'Rewrite .fav': '重写 .fav',
+    'Restore "{c}" from its .fav mirror?': '从 .fav 镜像恢复 "{c}"？',
+    'The mirror file wins: {a} song{s} only in the mirror will be added, {b} only in the database will be removed. Lines pointing to uninstalled charts stay in the file. A database backup is taken first.':
+        '以镜像文件为准：仅在镜像中的 {a} 首歌曲将被添加，仅在数据库中的 {b} 首将被移除。指向未安装谱面的行会保留在文件里。先备份数据库。',
+    'Back up and restore': '备份并恢复',
+    '"{c}" restored from its .fav ({n} songs, {m} not installed)': '已从 .fav 恢复 "{c}"（{n} 首歌曲，{m} 首未安装）',
+    'Rewrite the .fav of "{c}" from the database?': '用数据库重写 "{c}" 的 .fav？',
+    'The database wins: the mirror is regenerated from the collection content and loses the {a} line{s} it alone carried. The current file is saved as .fav.bak first.':
+        '以数据库为准：镜像将根据收藏夹内容重新生成，仅存在于镜像中的 {a} 行将丢失。当前文件会先保存为 .fav.bak。',
+    'Back up and rewrite': '备份并重写',
+    '.fav mirror rewritten for "{c}"': '已重写 "{c}" 的 .fav 镜像',
 };
