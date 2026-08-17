@@ -755,7 +755,7 @@ function renderContext() {
         ? t('{n} song{s}', { n: formatInt(state.songs.length), s: plural(state.songs.length) })
         : '';
     if (state.missing.length) {
-        count += (count ? ' · ' : '') + t('{n} not installed', { n: formatInt(state.missing.length) });
+        count += (count ? ' · ' : '') + t('{n} not installed', { n: formatInt(state.missing.length), s2: plural(state.missing.length) });
     }
     $('#context-count').textContent = count;
     $('#collection-actions').classList.toggle('hidden', state.view.type !== 'collection');
@@ -849,9 +849,13 @@ function missingRow(entry) {
     title.appendChild(el('span', 'song-title-text', entry.name));
     info.appendChild(title);
     if (entry.parent) info.appendChild(el('p', 'song-artist', entry.parent));
-    info.appendChild(el('p', 'song-sub', t('Not installed — kept in the collection\'s .fav file')));
+    // Two different situations: the folder is on disk but the game never
+    // indexed it (fix = launch the game), or the chart is not installed at all
+    info.appendChild(el('p', 'song-sub', entry.on_disk
+        ? t('Present on disk but missing from the game index — launch the game and open the song list to re-index.')
+        : t('Not installed — kept in the collection\'s .fav file')));
 
-    row.append(jacket, info, el('span', 'missing-tag', t('Missing')));
+    row.append(jacket, info, el('span', 'missing-tag', entry.on_disk ? t('Not indexed') : t('Missing')));
 
     return row;
 }
@@ -2543,7 +2547,11 @@ async function openCollectionsPage() {
             const missing = row.insertCell();
             missing.className = 'num';
             if (collection.missing > 0) {
-                missing.appendChild(el('span', 'missing-badge', String(collection.missing)));
+                const badge = el('span', 'missing-badge', String(collection.missing));
+                if (collection.missing_on_disk > 0) {
+                    badge.title = t('{a} of them exist on disk but are not in the game index (launch the game to re-index)', { a: collection.missing_on_disk });
+                }
+                missing.appendChild(badge);
             } else {
                 missing.textContent = '—';
             }
@@ -2591,6 +2599,10 @@ function promptResyncFromFav(collection) {
         modal.appendChild(el('h3', '', t('Restore "{c}" from its .fav mirror?', { c: collection.name })));
         modal.appendChild(el('p', 'note note-warn',
             t('The mirror file wins: {a} song{s} only in the mirror will be added, {b} only in the database will be removed. Lines pointing to uninstalled charts stay in the file. A database backup is taken first.', { a: collection.only_fav, s: plural(collection.only_fav), b: collection.only_db })));
+        if (collection.missing_on_disk > 0) {
+            modal.appendChild(el('p', 'note',
+                t('{m} missing line{s} point to folders that exist on disk but are not in the game index. Launch the game to re-index first if you want them restored too — they stay in the .fav either way.', { m: collection.missing_on_disk, s: plural(collection.missing_on_disk) })));
+        }
 
         const actions = el('div', 'modal-actions');
         const cancel = el('button', 'btn btn-quiet', t('Cancel'));

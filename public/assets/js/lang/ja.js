@@ -298,4 +298,11 @@ window.USC_I18N.ja = {
         'データベースを優先します: ミラーはコレクションの内容から再生成され、ミラーのみにあった {a} 行は失われます。現在のファイルはまず .fav.bak として保存されます。',
     'Back up and rewrite': 'バックアップして再生成',
     '.fav mirror rewritten for "{c}"': '"{c}" の .fav ミラーを再生成しました',
+    'Present on disk but missing from the game index — launch the game and open the song list to re-index.':
+        'ディスク上には存在しますが、ゲームのインデックスにありません — ゲームを起動して曲リストを開くと再インデックスされます。',
+    'Not indexed': '未インデックス',
+    '{m} missing line{s} point to folders that exist on disk but are not in the game index. Launch the game to re-index first if you want them restored too — they stay in the .fav either way.':
+        'ディスク上に存在するのにゲームのインデックスにない行が {m} 件あります。先にゲームを起動して再インデックスすると、それらも復元されます — いずれの場合も .fav には残ります。',
+    '{a} of them exist on disk but are not in the game index (launch the game to re-index)':
+        'うち {a} 件はディスク上に存在しますが、ゲームのインデックスにありません（ゲームを起動して再インデックス）',
 };

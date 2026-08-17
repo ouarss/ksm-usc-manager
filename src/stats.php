@@ -52,18 +52,19 @@ function collectionsOverview(PDO $pdo, string $dbRoot, string $songsDir): array
              FROM Charts WHERE folderid IN ($idList)"
         )->fetch(PDO::FETCH_ASSOC);
 
-        $status = $sync[$name] ?? ['status' => 'no_fav', 'only_fav' => 0, 'only_db' => 0, 'missing' => 0];
+        $status = $sync[$name] ?? ['status' => 'no_fav', 'only_fav' => 0, 'only_db' => 0, 'missing' => 0, 'missing_on_disk' => 0];
 
         $rows[] = [
-            'name'      => $name,
-            'songs'     => $collection['songs'],
-            'charts'    => (int) $range['charts'],
-            'min_level' => (int) $range['min_level'],
-            'max_level' => (int) $range['max_level'],
-            'missing'   => $status['missing'],
-            'sync'      => $status['status'],
-            'only_fav'  => $status['only_fav'],
-            'only_db'   => $status['only_db'],
+            'name'            => $name,
+            'songs'           => $collection['songs'],
+            'charts'          => (int) $range['charts'],
+            'min_level'       => (int) $range['min_level'],
+            'max_level'       => (int) $range['max_level'],
+            'missing'         => $status['missing'],
+            'missing_on_disk' => $status['missing_on_disk'],
+            'sync'            => $status['status'],
+            'only_fav'        => $status['only_fav'],
+            'only_db'         => $status['only_db'],
         ];
     }
 

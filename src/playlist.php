@@ -329,7 +329,7 @@ function favSyncStatus(PDO $pdo, string $dbRoot, string $songsDir): array
         $name = $collection['name'];
         $file = favPath($songsDir, $name);
         if (!is_file($file)) {
-            $result[$name] = ['status' => 'no_fav', 'only_fav' => 0, 'only_db' => 0, 'missing' => 0];
+            $result[$name] = ['status' => 'no_fav', 'only_fav' => 0, 'only_db' => 0, 'missing' => 0, 'missing_on_disk' => 0];
             continue;
         }
 
@@ -345,6 +345,7 @@ function favSyncStatus(PDO $pdo, string $dbRoot, string $songsDir): array
         $matched = [];
         $onlyFav = [];
         $missing = 0;
+        $missingOnDisk = 0;
         foreach (preg_split('/\r\n|\r|\n/', (string) file_get_contents($file)) as $line) {
             $line = trim($line);
             if ($line === '') {
@@ -355,6 +356,9 @@ function favSyncStatus(PDO $pdo, string $dbRoot, string $songsDir): array
             $id = $pathToId[$rel] ?? $baseToId[end($parts)] ?? null;
             if ($id === null) {
                 $missing++;
+                if (is_dir($songsDir . '/' . str_replace('\\', '/', $line))) {
+                    $missingOnDisk++; // present on disk, absent from the game index
+                }
             } elseif (isset($dbIds[$id])) {
                 $matched[$id] = true;
             } else {
@@ -364,10 +368,11 @@ function favSyncStatus(PDO $pdo, string $dbRoot, string $songsDir): array
         $onlyDb = count($dbIds) - count($matched);
 
         $result[$name] = [
-            'status'   => ($onlyFav !== [] || $onlyDb > 0) ? 'diverged' : 'in_sync',
-            'only_fav' => count($onlyFav),
-            'only_db'  => $onlyDb,
-            'missing'  => $missing,
+            'status'          => ($onlyFav !== [] || $onlyDb > 0) ? 'diverged' : 'in_sync',
+            'only_fav'        => count($onlyFav),
+            'only_db'         => $onlyDb,
+            'missing'         => $missing,
+            'missing_on_disk' => $missingOnDisk,
         ];
     }
 
@@ -413,7 +418,15 @@ function favMissingEntries(PDO $pdo, string $dbRoot, string $songsDir, string $n
             continue;
         }
         $parts = explode('\\', str_replace('/', '\\', $line));
-        $missing[] = ['path' => $line, 'name' => array_pop($parts), 'parent' => implode('\\', $parts)];
+        $missing[] = [
+            'path'    => $line,
+            'name'    => array_pop($parts),
+            'parent'  => implode('\\', $parts),
+            // The folder can exist on disk while absent from the DB: the game
+            // simply has not indexed it yet — a different fix (launch the game)
+            // than a chart that is not installed at all.
+            'on_disk' => is_dir($songsDir . '/' . str_replace('\\', '/', $line)),
+        ];
     }
 
     return $missing;

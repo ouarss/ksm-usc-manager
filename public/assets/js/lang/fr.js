@@ -292,12 +292,19 @@ window.USC_I18N.fr = {
     'Rewrite .fav': 'Réécrire le .fav',
     'Restore "{c}" from its .fav mirror?': 'Restaurer "{c}" depuis son miroir .fav ?',
     'The mirror file wins: {a} song{s} only in the mirror will be added, {b} only in the database will be removed. Lines pointing to uninstalled charts stay in the file. A database backup is taken first.':
-        'Le fichier miroir gagne : {a} musique{s} présentes seulement dans le miroir seront ajoutées, {b} présentes seulement en base seront retirées. Les lignes pointant vers des charts non installés restent dans le fichier. Une sauvegarde de la base est faite d\'abord.',
+        'Le fichier miroir gagne : {a} à ajouter depuis le miroir, {b} à retirer de la base. Les lignes pointant vers des charts non installés restent dans le fichier. Une sauvegarde de la base est faite d\'abord.',
     'Back up and restore': 'Sauvegarder et restaurer',
     '"{c}" restored from its .fav ({n} songs, {m} not installed)': '"{c}" restaurée depuis son .fav ({n} musiques, {m} non installées)',
     'Rewrite the .fav of "{c}" from the database?': 'Réécrire le .fav de "{c}" depuis la base ?',
     'The database wins: the mirror is regenerated from the collection content and loses the {a} line{s} it alone carried. The current file is saved as .fav.bak first.':
-        'La base gagne : le miroir est régénéré depuis le contenu de la collection et perd les {a} ligne{s} qu\'il portait seul. Le fichier actuel est d\'abord copié en .fav.bak.',
+        'La base gagne : le miroir est régénéré depuis le contenu de la collection ; les lignes qu\'il était seul à porter ({a}) sont perdues. Le fichier actuel est d\'abord copié en .fav.bak.',
     'Back up and rewrite': 'Sauvegarder et réécrire',
     '.fav mirror rewritten for "{c}"': 'Miroir .fav réécrit pour "{c}"',
+    'Present on disk but missing from the game index — launch the game and open the song list to re-index.':
+        'Présente sur le disque mais absente de l\'index du jeu — lance le jeu et ouvre la liste des musiques pour ré-indexer.',
+    'Not indexed': 'Non indexée',
+    '{m} missing line{s} point to folders that exist on disk but are not in the game index. Launch the game to re-index first if you want them restored too — they stay in the .fav either way.':
+        'Lignes manquantes pointant vers des dossiers présents sur le disque mais absents de l\'index du jeu : {m}. Lance le jeu pour ré-indexer d\'abord si tu veux les restaurer aussi — elles restent dans le .fav dans tous les cas.',
+    '{a} of them exist on disk but are not in the game index (launch the game to re-index)':
+        '{a} d\'entre elles existent sur le disque mais ne sont pas dans l\'index du jeu (lance le jeu pour ré-indexer)',
 };

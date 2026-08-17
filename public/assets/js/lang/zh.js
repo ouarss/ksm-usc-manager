@@ -297,4 +297,11 @@ window.USC_I18N.zh = {
         '以数据库为准：镜像将根据收藏夹内容重新生成，仅存在于镜像中的 {a} 行将丢失。当前文件会先保存为 .fav.bak。',
     'Back up and rewrite': '备份并重写',
     '.fav mirror rewritten for "{c}"': '已重写 "{c}" 的 .fav 镜像',
+    'Present on disk but missing from the game index — launch the game and open the song list to re-index.':
+        '磁盘上存在，但不在游戏索引中——启动游戏并打开歌曲列表即可重新索引。',
+    'Not indexed': '未索引',
+    '{m} missing line{s} point to folders that exist on disk but are not in the game index. Launch the game to re-index first if you want them restored too — they stay in the .fav either way.':
+        '有 {m} 行缺失指向磁盘上存在但不在游戏索引中的文件夹。想一并恢复它们，请先启动游戏重新索引——无论如何它们都会保留在 .fav 中。',
+    '{a} of them exist on disk but are not in the game index (launch the game to re-index)':
+        '其中 {a} 个存在于磁盘上，但不在游戏索引中（启动游戏以重新索引）',
 };

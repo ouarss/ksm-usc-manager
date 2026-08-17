@@ -297,4 +297,11 @@ window.USC_I18N.ko = {
         '데이터베이스가 우선합니다: 미러가 컬렉션 내용으로 다시 생성되어 미러에만 있던 {a}줄은 사라집니다. 현재 파일은 먼저 .fav.bak으로 저장됩니다.',
     'Back up and rewrite': '백업 후 다시 쓰기',
     '.fav mirror rewritten for "{c}"': '"{c}"의 .fav 미러를 다시 썼습니다',
+    'Present on disk but missing from the game index — launch the game and open the song list to re-index.':
+        '디스크에는 있지만 게임 인덱스에 없습니다 — 게임을 실행하고 곡 목록을 열면 다시 인덱싱됩니다.',
+    'Not indexed': '미인덱스',
+    '{m} missing line{s} point to folders that exist on disk but are not in the game index. Launch the game to re-index first if you want them restored too — they stay in the .fav either way.':
+        '디스크에는 있지만 게임 인덱스에 없는 누락 줄이 {m}개 있습니다. 함께 복원하려면 먼저 게임을 실행해 다시 인덱싱하세요 — 어느 쪽이든 .fav에는 남습니다.',
+    '{a} of them exist on disk but are not in the game index (launch the game to re-index)':
+        '그중 {a}개는 디스크에 있지만 게임 인덱스에 없습니다(게임을 실행해 다시 인덱싱)',
 };
